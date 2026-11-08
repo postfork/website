@@ -722,6 +722,12 @@ strong {
   margin-top: 0.75rem;
 }
 
+.card .meta a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 /* Is / is not list */
 
 .isnot {
