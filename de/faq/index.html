@@ -108,9 +108,9 @@
 <li><strong>Identität:</strong> eigene Genesis, Netzwerk-Magic, Ports, Adresspräfix <code>pf</code>; keine fest kodierten Postfork-Block-Checkpoints (der in Genesis festgelegte Bitcoin-Header, der BtcView verankert, ist ein reproduzierbarer Konsensparameter, kein solcher Checkpoint).</li>
 <li><strong>Geld:</strong> Blocksubvention null in jeder Höhe.</li>
 <li><strong>Script:</strong> BIP-119 und BIP-348 ab Genesis aktiv, wie geschrieben. Abweichungen von den BIPs: keine.</li>
-<li><strong>Peg:</strong> Verfolgung der Bitcoin-Header (BtcView), Registrierung von Operator-Epochen, Mint-Regel für den Peg-in und Burn-Regel, transportiert in getaggten <code>OP_RETURN</code>-Outputs ohne Änderung der Serialisierung.</li>
+<li><strong>Peg:</strong> Verfolgung der Bitcoin-Header (BtcView), Registrierung von Operator-Epochen, Mint-Regel für den Peg-in und Burn-Regel, transportiert in getaggten <code>OP_RETURN</code>-Outputs ohne Änderung der Transaktions-Serialisierung.</li>
 </ul>
-<p>Die Blockproduktion ist der offene Teil (D-13). Serialisierung, Signatur-Hashes, Taproot und Blockgewicht bleiben wie in Bitcoin Core, ebenso die gewöhnliche Gebühren-, RBF-, Package- und TRUC-Policy (in pBTC). CTV/CSFS-Standardness und das Relay von Peg-Transaktionen folgen den aufgeführten Policy-Deltas D-06, D-15 und D-16. Siehe die <a href="/de/#principles">Delta-Tabelle</a>.</p>
+<p>Die Blockproduktion ist der offene Teil (D-13). Transaktions-Serialisierung, Signatur-Hashes, Taproot und Blockgewicht bleiben wie in Bitcoin Core, ebenso Block- und Header-Serialisierung bis auf die Header-Erweiterung, die der offene Entscheid zur Blockproduktion hinzufügen kann. Auch die gewöhnliche Gebühren-, RBF-, Package- und TRUC-Policy (in pBTC) bleibt unverändert. CTV/CSFS-Standardness und das Relay von Peg-Transaktionen folgen den aufgeführten Policy-Deltas D-06, D-15 und D-16. Siehe die <a href="/de/#principles">Delta-Tabelle</a>.</p>
     </section>
     <section class="faq-item" aria-labelledby="why-no-internalkey">
       <h2 id="why-no-internalkey">Warum ist OP_INTERNALKEY nicht dabei? <a class="copy-link" href="#why-no-internalkey" aria-label="Link zu dieser Frage kopieren" data-copied-label="Link kopiert"></a></h2>

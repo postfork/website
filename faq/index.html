@@ -108,9 +108,9 @@
 <li><strong>Identity:</strong> own genesis, network magic, ports, address prefix <code>pf</code>; no hardcoded Postfork block checkpoints (the genesis-pinned Bitcoin header that roots BtcView is a reproducible consensus parameter, not such a checkpoint).</li>
 <li><strong>Money:</strong> block subsidy zero at every height.</li>
 <li><strong>Script:</strong> BIP-119 and BIP-348 active from genesis, as written. Deviations from the BIPs: none.</li>
-<li><strong>Peg:</strong> Bitcoin header tracking (BtcView), operator-epoch registration, the peg-in mint rule and the burn rule, carried in tagged <code>OP_RETURN</code> outputs with no serialization change.</li>
+<li><strong>Peg:</strong> Bitcoin header tracking (BtcView), operator-epoch registration, the peg-in mint rule and the burn rule, carried in tagged <code>OP_RETURN</code> outputs with no change to transaction serialization.</li>
 </ul>
-<p>Block production (D-13) is the open part. Serialization, signature hashes, Taproot and block weight stay as in Bitcoin Core, and so do ordinary fee, RBF, package and TRUC policy (in pBTC). CTV/CSFS standardness and the relay of peg transactions follow the listed policy deltas D-06, D-15 and D-16. See the <a href="/#principles">delta table</a>.</p>
+<p>Block production (D-13) is the open part. Transaction serialization, signature hashes, Taproot and block weight stay as in Bitcoin Core, and block and header serialization too apart from the header extension the open block-production decision may add. Ordinary fee, RBF, package and TRUC policy (in pBTC) stay unchanged too. CTV/CSFS standardness and the relay of peg transactions follow the listed policy deltas D-06, D-15 and D-16. See the <a href="/#principles">delta table</a>.</p>
     </section>
     <section class="faq-item" aria-labelledby="why-no-internalkey">
       <h2 id="why-no-internalkey">Why is OP_INTERNALKEY not included? <a class="copy-link" href="#why-no-internalkey" aria-label="Copy link to this question" data-copied-label="Link copied"></a></h2>
