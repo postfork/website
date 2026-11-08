@@ -1517,6 +1517,13 @@ details.more .table-wrap {
   margin-left: auto;
 }
 
+.paper-fallback .paper-main {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
 .paper-fallback object {
   flex: 1 1 auto;
   width: 100%;
