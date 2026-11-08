@@ -10,11 +10,11 @@ Static website for Postfork: Bitcoin Core with BIP-119 (`OP_CHECKTEMPLATEVERIFY`
 
 When is pBTC safe (specification §9.3, verbatim):
 
-> *pBTC is safe for you if you (or an operator you trust) were admitted to the operator set of the first mint-eligible epoch, as verified on your own node, and refuse malicious graphs, at least one honest challenger watches both chains and acts in time, the cryptography and the Postfork validity proof are sound, Bitcoin's hashrate majority is honest and no Bitcoin reorganization deeper than the mint depth occurs, Postfork block producers include honest Bitcoin headers, and the block-production class in force is one that §11.2 permits for pBTC and its canonicity assumption holds (under BP-O1V: an honest merge-mining majority) — and even then, the worst case is a freeze, which is not theft but may never be recoverable.*
+> *pBTC is safe for you if you (or an operator you trust) were admitted to the operator set of the first mint-eligible epoch, as verified on your own node, and refuse malicious graphs, at least one honest challenger watches both chains and acts in time, the cryptography and the Postfork validity proof are sound, Bitcoin's hashrate majority is honest and no Bitcoin reorganization orphans a settled deposit, Postfork block producers include honest Bitcoin headers, and the block-production class in force is one that §11.2 permits for pBTC and its canonicity assumption holds (under BP-O1V: an honest merge-mining majority) — and even then, the worst case is a freeze, which is not theft but may never be recoverable.*
 
 Prominent claim (specification §11.3, verbatim):
 
-> *pBTC is effectively trustless only in the self-operator sense of §1.1.1, only for the block-production class in force and while its assumptions hold, including that block producers include honest Bitcoin headers, and only after all gates clear. Under the stated assumptions, including that no Bitcoin reorganization deeper than the mint depth occurs and no Attack H, F or V succeeds, the worst case is freeze, not theft, and a freeze may be permanent.*
+> *pBTC is effectively trustless only in the self-operator sense of §1.1.1, only for the block-production class in force and while its assumptions hold, including that block producers include honest Bitcoin headers, and only after all gates clear. Under the stated assumptions, including that no Bitcoin reorganization orphans a settled deposit and no Attack H, F or V succeeds, the worst case is freeze, not theft, and a freeze may be permanent.*
 
 ## Structure
 
