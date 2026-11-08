@@ -36,7 +36,7 @@ Prominent claim (specification §11.3, verbatim):
 | `robots.txt`, `sitemap.xml` | Crawl rules and sitemap with `hreflang` alternates incl. `x-default` |
 | `.nojekyll` | Disables Jekyll processing on hosts that would apply it |
 
-Conventions: plain HTML and CSS, no build step, no package manager, no framework, no external fonts, CDNs, iframes, analytics or trackers. No inline `style` attributes and no inline scripts (JSON-LD data blocks only), so the CSP stays strict. Dark-first design with a light theme via `prefers-color-scheme`; no animation; smooth scrolling only under `prefers-reduced-motion: no-preference`. Every page has a canonical link, `hreflang` alternates and Open Graph/Twitter tags. English and German pages are kept in parity; a change to one language is a change to both.
+Conventions: plain HTML and CSS, no build step, no package manager, no framework, no external fonts, CDNs, iframes, analytics or trackers. No inline `style` attributes and no inline scripts (JSON-LD data blocks only), so the CSP stays strict. Dark-first design with a light theme via `prefers-color-scheme`; no animation; smooth scrolling only under `prefers-reduced-motion: no-preference`. Every indexable content page has a canonical link, `hreflang` alternates and Open Graph/Twitter tags (the 404 page does not). English and German pages are kept in parity; a change to one language is a change to both.
 
 The mark shows a chain that continues after a fork: grey blocks with a dashed path that is not yet taken, and an orange branch that continues. Postfork is nevertheless **not** a fork of Bitcoin's chain history (own genesis, empty UTXO set); the site says so wherever it matters.
 
