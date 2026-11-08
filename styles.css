@@ -909,6 +909,13 @@ figure {
   fill: var(--branch);
 }
 
+/* Light theme: the dark-teal branch circle needs light digits (#fff on #0f766e 5.5:1). */
+@media (prefers-color-scheme: light) {
+  .dg-step-bg.branch + .dg-step {
+    fill: #ffffff;
+  }
+}
+
 .dg-lane {
   fill: var(--surface-2);
   stroke: var(--line);
@@ -1411,7 +1418,6 @@ details.more .table-wrap {
   font-family: var(--mono);
   font-size: 0.9rem;
   font-weight: 400;
-  opacity: 0.6;
 }
 
 .copy-link::before {
@@ -1420,7 +1426,6 @@ details.more .table-wrap {
 
 .copy-link:hover,
 .copy-link:focus-visible {
-  opacity: 1;
   color: var(--accent);
 }
 
