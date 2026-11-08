@@ -90,7 +90,7 @@
         <dt>Emission</dt>
         <dd>Subvention 0 · kein Premine<span class="note">Gebühren werden in pBTC bezahlt</span></dd>
         <dt>Asset</dt>
-        <dd>pBTC (Postfork)<span class="note">vorgesehene 1:1-Deckung durch BTC in einer BitVM2-Reserve, unter den genannten Annahmen; Auszahlung höchstens verbrannter Betrag minus Höchstgebühr, nicht garantiert</span></dd>
+        <dd>pBTC (Postfork)<span class="note">vorgesehene 1:1-Deckung durch BTC in einer BitVM2-Reserve, unter den genannten Annahmen; Auszahlung mindestens verbrannter Betrag minus Höchstgebühr, aber nicht garantiert</span></dd>
         <dt>Mint-Finalität</dt>
         <dd>≥ 2016 Bitcoin-Blöcke und ≥ <code>W_mint</code> Arbeit<span class="note">normalerweise etwa zwei Wochen, länger, wenn die Bitcoin-Difficulty unter der des Checkpoints liegt; provisorisch</span></dd>
         <dt>Admin-Keys</dt>
@@ -388,7 +388,7 @@
       <div class="body">
         <div class="table-wrap">
           <table>
-            <caption>Ausdrücklich unverändert: Transaktions-Serialisierung, Block- und Header-Serialisierung bis auf die offene Header-Erweiterung (D-13), Signatur-Hashes, Taproot und Tapscript (ausser <code>0xcc</code>), Blockgewicht, Sigops, UTXO-Modell, Timelocks, Coinbase-Reife, Gebühren-, RBF-, Package- und TRUC-Policy, P2P, PSBT.</caption>
+            <caption>Ausdrücklich unverändert: Transaktions-Serialisierung, Block- und Header-Serialisierung bis auf die offene Header-Erweiterung (D-13), Signatur-Hashes, Taproot und Tapscript (ausser <code>0xcc</code>), Blockgewicht, Sigops, UTXO-Modell, Timelocks, Coinbase-Reife, Gebühren-, RBF-, Package- und TRUC-Policy, P2P-Nachrichten und Compact Blocks (abgesehen von dem, was die offene Header-Erweiterung ändert), PSBT.</caption>
             <thead><tr><th scope="col">ID</th><th scope="col">Delta</th><th scope="col">Klasse</th></tr></thead>
             <tbody>
               <tr><th scope="row">D-01</th><td>Ketten-Identität: Genesis, Message Start, Ports, Adresspräfix (<code>pf</code>), Base58-Präfixe, Coin Type</td><td>Identität</td></tr>

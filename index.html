@@ -90,7 +90,7 @@
         <dt>Issuance</dt>
         <dd>Subsidy 0 · no premine<span class="note">fees are paid in pBTC</span></dd>
         <dt>Asset</dt>
-        <dd>pBTC (Postfork)<span class="note">intended 1:1 backing by BTC in a BitVM2 reserve, under the stated assumptions; payout at most the burned amount minus the maximum fee, not guaranteed</span></dd>
+        <dd>pBTC (Postfork)<span class="note">intended 1:1 backing by BTC in a BitVM2 reserve, under the stated assumptions; payout at least the burned amount minus the maximum fee, but not guaranteed</span></dd>
         <dt>Mint finality</dt>
         <dd>≥ 2016 Bitcoin blocks and ≥ <code>W_mint</code> work<span class="note">normally about two weeks, longer if Bitcoin’s difficulty is below the checkpoint’s; provisional</span></dd>
         <dt>Admin keys</dt>
@@ -386,7 +386,7 @@
       <div class="body">
         <div class="table-wrap">
           <table>
-            <caption>Explicitly unchanged: transaction serialization, block and header serialization apart from the open header extension (D-13), signature hashes, Taproot and Tapscript (except <code>0xcc</code>), block weight, sigops, UTXO model, timelocks, coinbase maturity, fee, RBF, package and TRUC policy, P2P, PSBT.</caption>
+            <caption>Explicitly unchanged: transaction serialization, block and header serialization apart from the open header extension (D-13), signature hashes, Taproot and Tapscript (except <code>0xcc</code>), block weight, sigops, UTXO model, timelocks, coinbase maturity, fee, RBF, package and TRUC policy, P2P messages and compact blocks (apart from what the open header extension changes), PSBT.</caption>
             <thead><tr><th scope="col">ID</th><th scope="col">Delta</th><th scope="col">Class</th></tr></thead>
             <tbody>
               <tr><th scope="row">D-01</th><td>Chain identity: genesis, message start, ports, address prefix (<code>pf</code>), Base58 prefixes, coin type</td><td>identity</td></tr>
