@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Postfork FAQ</title>
+<meta name="description" content="Short answers about Postfork and pBTC (Postfork): can I use it today (no), what you would have to trust, who produces blocks (open), and what happens if Bitcoin activates CTV and CSFS." />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0b0c0e" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)" />
+<link rel="canonical" href="https://postfork.org/faq/" />
+<link rel="alternate" hreflang="en" href="https://postfork.org/faq/" />
+<link rel="alternate" hreflang="de" href="https://postfork.org/de/faq/" />
+<link rel="alternate" hreflang="x-default" href="https://postfork.org/faq/" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+<link rel="stylesheet" href="/styles.css" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Postfork" />
+<meta property="og:title" content="Postfork FAQ" />
+<meta property="og:description" content="Short answers about Postfork and pBTC (Postfork): can I use it today (no), what you would have to trust, who produces blocks (open), and what happens if Bitcoin activates CTV and CSFS." />
+<meta property="og:url" content="https://postfork.org/faq/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:locale:alternate" content="de_DE" />
+<meta property="og:image" content="https://postfork.org/og.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Postfork: Bitcoin Core with CTV and CSFS from genesis. Design specification, pre-launch." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Postfork FAQ" />
+<meta name="twitter:description" content="Short answers about Postfork and pBTC (Postfork): can I use it today (no), what you would have to trust, who produces blocks (open), and what happens if Bitcoin activates CTV and CSFS." />
+<meta name="twitter:image" content="https://postfork.org/og.png" />
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="status-strip" role="note"><div class="wrap"><span class="tag">Pre-launch</span><span>Design specification. No code. Nothing described here is live. Can I use it today? <strong>No.</strong></span></div></div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Postfork"><svg viewBox="2 7 28 19" width="30" height="20" aria-hidden="true" focusable="false"><rect class="logo-base" x="3" y="20" width="5" height="5" rx="1"/><rect class="logo-base" x="10" y="20" width="5" height="5" rx="1"/><path class="logo-link" d="M8 22.5h2"/><path class="logo-ghost" d="M16 22.5h7.5"/><rect class="logo-ghost-box" x="24.6" y="20.6" width="3.8" height="3.8" rx="0.8"/><path class="logo-accent-link" d="M15 20.5L17.5 13"/><rect class="logo-accent" x="17" y="8" width="5" height="5" rx="1"/><path class="logo-accent-link" d="M22 10.5h2"/><rect class="logo-accent" x="24" y="8" width="5" height="5" rx="1"/></svg><span>Postfork</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="/#what">Overview</a><a href="/#opcodes">CTV + CSFS</a><a href="/#peg">Peg</a><a href="/#open">Open questions</a><a href="/#status">Status</a><a href="/faq/" aria-current="page">FAQ</a><a href="/white-paper/">Whitepaper</a>
+    </nav>
+    <div class="langs" role="group" aria-label="Language">
+      <a href="/faq/" hreflang="en" lang="en" aria-current="true">EN</a>
+      <a href="/de/faq/" hreflang="de" lang="de">DE</a>
+    </div>
+  </div>
+</header>
+<main id="main">
+<div class="page-head">
+  <div class="wrap">
+    <p class="eyebrow">Design specification · pre-launch</p>
+    <h1>FAQ</h1>
+    <p class="lede">Short answers. The <a href="/white-paper/">whitepaper</a> explains more; the specification is the normative source. Where an answer simplifies, the specification governs.</p>
+  </div>
+</div>
+<div class="wrap faq-layout">
+  <nav class="faq-toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">Questions</h2>
+    <ol>
+      <li><a href="#can-i-use-it-today">Can I use it today?</a></li>
+      <li><a href="#what-is-postfork">What is Postfork?</a></li>
+      <li><a href="#why-a-new-chain">Why a new chain?</a></li>
+      <li><a href="#is-it-a-bitcoin-fork">Is Postfork a fork of Bitcoin? Do I get coins?</a></li>
+      <li><a href="#what-changes">What changes compared to Bitcoin Core?</a></li>
+      <li><a href="#why-no-internalkey">Why is OP_INTERNALKEY not included?</a></li>
+      <li><a href="#is-this-the-old-pbtc">Is pBTC (Postfork) the old pTokens pBTC?</a></li>
+      <li><a href="#is-it-trustless">Is it trustless?</a></li>
+      <li><a href="#can-operators-steal">Can operators steal the bitcoin?</a></li>
+      <li><a href="#who-produces-blocks">Who produces blocks?</a></li>
+      <li><a href="#bitcoin-activates">What happens when Bitcoin activates CTV and CSFS?</a></li>
+      <li><a href="#how-peg-in">How would I get pBTC?</a></li>
+      <li><a href="#how-redeem">How would I get BTC back?</a></li>
+      <li><a href="#operator-cost">What does it cost to be an operator?</a></li>
+      <li><a href="#fees">Is there a token? Who pays block producers?</a></li>
+      <li><a href="#gatekeeper">What is the gatekeeper?</a></li>
+      <li><a href="#bugs">Why no admin keys? What happens if there is a bug?</a></li>
+      <li><a href="#privacy">Is it private?</a></li>
+      <li><a href="#risks">What are the main risks?</a></li>
+      <li><a href="#where-spec">Where is the specification?</a></li>
+    </ol>
+  </nav>
+  <div class="faq-list">
+    <section class="faq-item" aria-labelledby="can-i-use-it-today">
+      <h2 id="can-i-use-it-today">Can I use it today? <a class="copy-link" href="#can-i-use-it-today" aria-label="Copy link to this question" data-copied-label="Link copied"></a></h2>
+      <p class="short"><strong>No.</strong></p>
+<p>Postfork is a pre-launch design specification. There is no code, no running chain, no pBTC (Postfork) and no test network. Two families of launch gates must both clear: the four requirement gates (growth-only operator set encoded, setup integrity, holder-to-operator onboarding, challenger economics) and the maturity gates G2–G6, including the block-production decision. All of them are open; only G1 (BitVM2 mainnet-proven) has cleared. Nothing on this site describes a live system.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="what-is-postfork">
+      <h2 id="what-is-postfork">What is Postfork? <a class="copy-link" href="#what-is-postfork" aria-label="Copy link to this question" data-copied-label="Link copied"></a></h2>
+      <p>A proposed new blockchain from block 0 whose consensus is Bitcoin Core with BIP-119 (<code>OP_CHECKTEMPLATEVERIFY</code>) and BIP-348 (<code>OP_CHECKSIGFROMSTACK</code>) active from genesis, plus a small, explicitly delimited peg extension. It has no native token, no block subsidy and no premine. Its only asset is pBTC (Postfork): bitcoin pegged in from Bitcoin through a BitVM2 reserve adapted from <a href="https://github.com/zk-BTC/zkbtc">zkBTC</a>.</p>
+<p>The purpose is to build and use, with real bitcoin instead of valueless test coins, what CTV and CSFS would enable on Bitcoin.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="why-a-new-chain">
+      <h2 id="why-a-new-chain">Why a new chain? <a class="copy-link" href="#why-a-new-chain" aria-label="Copy link to this question" data-copied-label="Link copied"></a></h2>
+      <p>Neither opcode is active on Bitcoin; both BIPs are <code>Draft</code> (<a href="https://github.com/bitcoin/bips/blob/master/bip-0119.mediawiki">BIP-119</a>, <a href="https://github.com/bitcoin/bips/blob/master/bip-0348.md">BIP-348</a>). Today they run in regression tests and on the <a href="https://github.com/bitcoin-inquisition/bitcoin/releases">Bitcoin Inquisition</a> signet, with coins worth nothing. Postfork is not a soft-fork proposal and takes no position on whether or how Bitcoin should activate anything. It offers a separate place where the script layer is exactly the proposed one and the only money is bitcoin.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="is-it-a-bitcoin-fork">
+      <h2 id="is-it-a-bitcoin-fork">Is Postfork a fork of Bitcoin? Do I get coins? <a class="copy-link" href="#is-it-a-bitcoin-fork" aria-label="Copy link to this question" data-copied-label="Link copied"></a></h2>
+      <p>No, and no. “Post-fork” refers to Bitcoin after the CTV + CSFS soft fork. Postfork does not copy Bitcoin’s chain history: it starts from its own genesis with an empty UTXO set. There is no snapshot and no airdrop. You get pBTC only by pegging in BTC.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="what-changes">
+      <h2 id="what-changes">What changes compared to Bitcoin Core? <a class="copy-link" href="#what-changes" aria-label="Copy link to this question" data-copied-label="Link copied"></a></h2>
+      <p>Sixteen listed deltas and nothing else. They fall into four groups:</p>
+<ul>
+<li><strong>Identity:</strong> own genesis, network magic, ports, address prefix <code>pf</code>; no hardcoded checkpoints.</li>
+<li><strong>Money:</strong> block subsidy zero at every height.</li>
+<li><strong>Script:</strong> BIP-119 and BIP-348 active from genesis, as written. Deviations from the BIPs: none.</li>
+<li><strong>Peg:</strong> Bitcoin header tracking (BtcView), operator-epoch registration, the peg-in mint rule and the burn rule, carried in tagged <code>OP_RETURN</code> outputs with no serialization change.</li>
+</ul>
+<p>Block production (D-13) is the open part. Serialization, signature hashes, Taproot, block weight, fee and relay policy stay as in Bitcoin Core. See the <a href="/#principles">delta table</a>.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="why-no-internalkey">
+      <h2 id="why-no-internalkey">Why is OP_INTERNALKEY not included? <a class="copy-link" href="#why-no-internalkey" aria-label="Copy link to this question" data-copied-label="Link copied"></a></h2>
+      <p>Because the proposal published as “CTV + CSFS” (<a href="https://ctv-csfs.com/">open letter</a>; <a href="https://bitcoinops.org/en/newsletters/2025/07/04/">Bitcoin Optech</a>) contains exactly BIP-119 and BIP-348, and the Bitcoin Core reference pull requests (<a href="https://github.com/bitcoin/bitcoin/pull/31989">#31989</a>, <a href="https://github.com/bitcoin/bitcoin/pull/32247">#32247</a>) cover exactly those two. <a href="https://github.com/bitcoin/bips/blob/master/bip-0349.md">BIP-349</a> appears only in larger bundles (<a href="https://bitcoinops.org/en/newsletters/2025/12/05/">LNHANCE</a>, <a href="https://github.com/bitcoin/bips/blob/master/bip-0448.md">BIP-448</a>). It adds no capability, since a script can push the key explicitly for about 8 vbytes. <code>0xcb</code> stays <code>OP_SUCCESS203</code>, a free slot should Bitcoin ever activate it.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="is-this-the-old-pbtc">
+      <h2 id="is-this-the-old-pbtc">Is pBTC (Postfork) the old pTokens pBTC? <a class="copy-link" href="#is-this-the-old-pbtc" aria-label="Copy link to this question" data-copied-label="Link copied"></a></h2>
+      <p class="short"><strong>No.</strong> pBTC (Postfork) has no relation to that token, its issuers, or its holders.</p>
+<p>An unrelated token with the ticker pBTC exists: the pTokens wrapped bitcoin of the pNetwork project. Its BSC variant was exploited on 2021-09-19; according to the project’s <a href="https://medium.com/pnetwork/pnetwork-post-mortem-pbtc-on-bsc-exploit-170890c58d5f">post-mortem</a>, the attacker took 277 BTC, most of that bridge’s collateral (coverage: <a href="https://www.theblock.co/news/defi/2021-09-20-defi-pnetwork-hack-wrapped-bitcoin-12-million-lost-118060">The Block</a>). The project later announced the end of life of its v2 bridges (<a href="https://x.com/pNetworkDeFi">pNetwork on X</a>, secondary source).</p>
+<p>To avoid confusion, Postfork writes “pBTC (Postfork)” at first mention, and wallets must identify it by chain (the Postfork genesis hash), never by ticker alone.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="is-it-trustless">
+      <h2 id="is-it-trustless">Is it trustless? <a class="copy-link" href="#is-it-trustless" aria-label="Copy link to this question" data-copied-label="Link copied"></a></h2>
+      <p class="short"><strong>Effectively trustless, in a defined sense, and only after all gates clear.</strong></p>
+<p>You do not trust other operators with your bitcoin. You are an operator. You run your own nodes. Concretely: anyone may join the operator set; the set only grows and nobody is removed; every new vault is pre-signed by the whole current set. If you, or a party you treat as honest, are admitted before the first mint-eligible epoch, every vault that can ever back a mint includes you, and you will not sign a graph that lets anyone steal. You run a Postfork and a Bitcoin full node, and you can serve your own exit. Registering is not being admitted: the current members certify each epoch and can censor joiners, so you must check on your own node that you are in the set of the first mint-eligible epoch.</p>
+<p>It does not mean zero assumptions. Operators cannot steal only under 1-of-N setup honesty, at least one honest live challenger acting in every window, sound circuit, graph and validity-proof cryptography, a Bitcoin adversary below about 50% of hashrate (inherited from Bitcoin), and the Postfork-side condition of the block-production class in force. Holders who never register still depend on one live operator, and censoring block producers can delay burns.</p>
+<p>The specification states it in one sentence:</p>
+<blockquote class="callout verbatim"><p>pBTC is safe for you if you (or an operator you trust) joined the operator set before the first mint-eligible epoch and refuse malicious graphs, at least one honest challenger watches both chains and acts in time, the cryptography and the Postfork validity proof are sound, Bitcoin's hashrate majority is honest, and the block-production class in force is one that §11.2 permits for pBTC — and even then, the worst case is a freeze, which is not theft but may never be recoverable.</p></blockquote>
+<p>Its prominent claim (§11.3), verbatim:</p>
+<blockquote class="callout verbatim"><p>pBTC is effectively trustless only in the self-operator sense of §1.1.1, only for the block-production class in force, and only after all gates clear. The worst case under the stated assumptions is freeze, not theft, and a freeze may be permanent.</p></blockquote>
+<p class="small muted">§11.2 of the specification lists the permitted block-production classes. Today no class has been chosen.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="can-operators-steal">
+      <h2 id="can-operators-steal">Can operators steal the bitcoin? <a class="copy-link" href="#can-operators-steal" aria-label="Copy link to this question" data-copied-label="Link copied"></a></h2>
+      <p>Not under the stated assumptions: 1-of-N setup honesty, at least one honest live challenger acting within every window, sound circuit, graph and validity-proof cryptography, a Bitcoin adversary below about 50% of hashrate, and the condition of the block-production class in force. The vault has a NUMS internal key and no live signing key; BTC moves only along the pre-signed BitVM2 graph, and every reimbursement claim can be disproved by anyone.</p>
+<p>Freeze is not theft; “not theft” is not “recoverable”. The worst case under the assumptions is that vaults or burned coins freeze. No one gains them, but there is no council, no admin key and no rescue path, so a freeze may be permanent. A soundness bug in the graph, the reimbursement statement or the validity proof can enable theft, as can a consensus bug shared by nodes and the validity-proof specification.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="who-produces-blocks">
+      <h2 id="who-produces-blocks">Who produces blocks? <a class="copy-link" href="#who-produces-blocks" aria-label="Copy link to this question" data-copied-label="Link copied"></a></h2>
+      <p class="short"><strong>Not decided.</strong> Block production is an open decision (gate G5).</p>
+<p>The options are merge mining (O1), an own SHA-256 proof of work (O2), a federated signing quorum (O3), and hybrids: O1 with soft pre-confirmations (H1), O3 with a validity proof (H2), and Bitcoin-anchored fork choice (H3). The choice matters for the peg: the BitVM2 verifier must establish that a burn is on the canonical Postfork chain, and how strong that is depends on the rule. It matters for mints too: producers who keep honest Bitcoin headers out of Postfork blocks can, together with a private branch of 2016 Bitcoin-difficulty blocks, make a mint against a non-canonical Bitcoin branch valid (Attack H). That needs no Bitcoin majority, only a miner willing to spend that work, so mint canonicity also depends on block production.</p>
+<p>The specification’s non-binding recommendation is H3 for fork choice, so that burn canonicity reduces to Bitcoin, with merge mining as the default way blocks are proposed and the Postfork validity proof required in every case. It rejects O2 for a real-money peg and O3 as a safety source. Merge mining alone does not inherit Bitcoin’s security (<a href="https://eprint.iacr.org/2017/791">ePrint 2017/791</a>). Block producers earn pBTC fees only; there is no subsidy.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="bitcoin-activates">
+      <h2 id="bitcoin-activates">What happens when Bitcoin activates CTV and CSFS? <a class="copy-link" href="#bitcoin-activates" aria-label="Copy link to this question" data-copied-label="Link copied"></a></h2>
+      <p>Postfork does not follow Bitcoin automatically, and no edition may change the meaning of an opcode in existing scripts. The specification covers each case:</p>
+<ul>
+<li><strong>Bitcoin activates BIP-119 and BIP-348 with identical semantics:</strong> Postfork has converged and its consensus is unchanged. The cross-chain replay hazard of rebindable signatures becomes live, and wallets must warn. CTV and CSFS can at most replace parts of the peg’s pre-signed graph with templates, as a new vault generation under adversarial review. They cannot verify a Postfork burn proof in script, so the dependency on a live operator for exits stays; an exit anyone can satisfy would need more capability, such as <code>OP_CAT</code>-class introspection.</li>
+<li><strong>Same opcodes, different revisions:</strong> Postfork keeps the pinned semantics.</li>
+<li><strong>A different bundle, for example BIP-448:</strong> Postfork may add those opcodes in their Bitcoin slots, which it kept free, but never removes CTV. It is then a superset.</li>
+<li><strong>CTV only:</strong> CSFS remains a Postfork extension.</li>
+<li><strong>Nothing:</strong> the premise stays hypothetical and is described as such.</li>
+</ul>
+<p>Existing vaults are never changed in place. Holders move by burning and re-pegging. A loosening change, or a change to the header format, fork choice or block production, is a hard-fork edition: existing vaults redeem only burns that are valid under the rules their graphs were signed for. Such an edition must therefore be a new chain with burn-and-re-peg migration, or must not be adopted while existing vaults back circulating pBTC.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="how-peg-in">
+      <h2 id="how-peg-in">How would I get pBTC? <a class="copy-link" href="#how-peg-in" aria-label="Copy link to this question" data-copied-label="Link copied"></a></h2>
+      <p>By pegging in, once everything is live. You pay one denomination (0.1, 1 or 10 BTC; provisional) into a deposit taproot. The operator set pre-signs the BitVM2 graph, including a transaction called <code>MoveToBacked</code> that moves the deposit into a vault and commits your Postfork claim script; you co-sign. When <code>MoveToBacked</code> is 2016 Bitcoin blocks deep, about two weeks, you submit a mint transaction. Every Postfork full node checks the proof against the Bitcoin headers it tracks, and pBTC appear at your claim script.</p>
+<p>Joining the operator set before the first mint-eligible epoch is optional and recommended: it is what makes you your own trust root.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="how-redeem">
+      <h2 id="how-redeem">How would I get BTC back? <a class="copy-link" href="#how-redeem" aria-label="Copy link to this question" data-copied-label="Link copied"></a></h2>
+      <p>Burn first. You publish a burn of an amount that matches an available vault, naming your Bitcoin key and a maximum fee. Any registered operator, including you if you joined, pays you on Bitcoin from its own funds and then claims reimbursement from a vault. Anyone may disprove a false claim during the challenge window. No gatekeeper is involved.</p>
+<p>The burn is final before any operator acts. If no operator serves it, for example because the maximum fee was too low, the coin stays burned with no payout until someone does. There is no un-burn.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="operator-cost">
+      <h2 id="operator-cost">What does it cost to be an operator? <a class="copy-link" href="#operator-cost" aria-label="Copy link to this question" data-copied-label="Link copied"></a></h2>
+      <p>A bond on Bitcoin (2 BTC class; provisional), locked until no vault of that epoch has a remaining claim path, plus participation in the presigning ceremony and fees. Operators front peg-outs from their own BTC and are reimbursed after the challenge window. It is a bonded commitment, not a retail click. A fraudulent claim that is disproved slashes the bond and pays the challenger a bounty on Bitcoin.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="fees">
+      <h2 id="fees">Is there a token? Who pays block producers? <a class="copy-link" href="#fees" aria-label="Copy link to this question" data-copied-label="Link copied"></a></h2>
+      <p>There is no token. Fees are paid in pBTC, and block producers earn fees only. Before the first mint no pBTC exists, so no fees exist; the first mint pays its fee out of the minted value. A fee-only security budget is a stated residual, not a feature.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="gatekeeper">
+      <h2 id="gatekeeper">What is the gatekeeper? <a class="copy-link" href="#gatekeeper" aria-label="Copy link to this question" data-copied-label="Link copied"></a></h2>
+      <p>An optional key, pinned in the genesis block, that can only refuse new mints, for example for source-of-funds screening. The product default is none. It cannot freeze, claw back or redirect coins, and it has no role in transfers, burns, payouts or challenges. If set, it censors all new peg-ins of the chain. It is never what makes pBTC safe.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="bugs">
+      <h2 id="bugs">Why no admin keys? What happens if there is a bug? <a class="copy-link" href="#bugs" aria-label="Copy link to this question" data-copied-label="Link copied"></a></h2>
+      <p>Any admin key, council or emergency key would be a trust root that is not you. So there is none, in any edition. The price is irreversibility: a non-soundness bug can freeze affected vaults for good; a soundness bug can enable theft; nobody can sweep funds to safety. Upgrades are new editions that users choose to run, and vaults migrate only by burn and re-peg. This is why the launch gates require independent re-implementation of the peg rules, differential testing and conformance before anything ships.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="privacy">
+      <h2 id="privacy">Is it private? <a class="copy-link" href="#privacy" aria-label="Copy link to this question" data-copied-label="Link copied"></a></h2>
+      <p>No. Postfork is as transparent as Bitcoin and claims no privacy. Peg-ins, transfers, burns, payouts and operator registrations are public, and the peg links a Bitcoin deposit to its Postfork recipient and a burn to its payout. Use fresh keys per deposit, claim script and recipient.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="risks">
+      <h2 id="risks">What are the main risks? <a class="copy-link" href="#risks" aria-label="Copy link to this question" data-copied-label="Link copied"></a></h2>
+      <p>Besides the assumptions above: the Postfork validity proof is not mainnet-proven (gate G4); burn canonicity is only as strong as the block-production class (Attack F); mint canonicity depends on block producers not censoring honest Bitcoin headers (Attack H); a deep Bitcoin reorganization beyond 2016 blocks would leave minted pBTC unbacked; wallet mistakes such as sending BTC on Bitcoin to a Postfork covenant script lose funds; and Bitcoin may activate a different covenant set or nothing. The specification lists twenty-two residual assumptions and does not call any of them solved.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="where-spec">
+      <h2 id="where-spec">Where is the specification? <a class="copy-link" href="#where-spec" aria-label="Copy link to this question" data-copied-label="Link copied"></a></h2>
+      <p>The specification (edition spec-v1.0, draft) is the single normative document of the project. Its publication in a public repository under <a href="https://github.com/postfork">github.com/postfork</a> is planned. The <a href="/white-paper/">whitepaper</a>, this FAQ and the website are informative; where they simplify, the specification governs. No private channel for security reports is open yet: GitHub private vulnerability reporting is not enabled on the repository of this website, and no e-mail address is published. Do not open a public issue for an unpatched soundness flaw; keep the report until a private channel is announced in this answer and in the website repository’s <code>SECURITY.md</code>.</p>
+    </section>
+  </div>
+</div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <a class="brand" href="/"><svg viewBox="2 7 28 19" width="30" height="20" aria-hidden="true" focusable="false"><rect class="logo-base" x="3" y="20" width="5" height="5" rx="1"/><rect class="logo-base" x="10" y="20" width="5" height="5" rx="1"/><path class="logo-link" d="M8 22.5h2"/><path class="logo-ghost" d="M16 22.5h7.5"/><rect class="logo-ghost-box" x="24.6" y="20.6" width="3.8" height="3.8" rx="0.8"/><path class="logo-accent-link" d="M15 20.5L17.5 13"/><rect class="logo-accent" x="17" y="8" width="5" height="5" rx="1"/><path class="logo-accent-link" d="M22 10.5h2"/><rect class="logo-accent" x="24" y="8" width="5" height="5" rx="1"/></svg><span>Postfork</span></a>
+        <p class="small">Bitcoin Core with BIP-119 and BIP-348 active from genesis, and pBTC (Postfork), a BitVM2-backed bitcoin peg. Pre-launch design specification. Nothing is live.</p>
+        <p class="small">Informative only. Where this site simplifies, the specification governs.</p>
+      </div>
+      <div>
+        <h2>Project</h2>
+        <ul>
+          <li><a href="/white-paper/">Whitepaper (EN, PDF)</a></li>
+          <li><a href="/de/white-paper/" hreflang="de">Whitepaper (DE, PDF)</a></li>
+          <li><a href="/faq/">FAQ</a></li>
+          <li><a href="/#status">Status and launch gates</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Elsewhere</h2>
+        <ul>
+          <li><a href="https://github.com/postfork">GitHub: postfork</a></li>
+          <li>X: @postfork <span class="muted">(planned; not yet secured, so not linked)</span></li>
+          <li><a href="https://github.com/zk-BTC/zkbtc">zkBTC, basis of the peg design</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="fine">The specification (edition spec-v1.0, draft) is the single normative document; its publication under the GitHub organisation postfork is planned. Site content under the MIT License. Postfork has no relation to the pTokens/pNetwork token also called pBTC.</p>
+  </div>
+</footer>
+<script src="/site.js" defer></script>
+</body>
+</html>

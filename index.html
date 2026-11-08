@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Postfork — Bitcoin Core with CTV and CSFS from genesis, backed only by pegged bitcoin</title>
+<meta name="description" content="A pre-launch design specification: Bitcoin Core with BIP-119 (CTV) and BIP-348 (CSFS) active from genesis. No token, no premine. The only asset is pBTC (Postfork), bitcoin pegged in through a BitVM2 reserve. Nothing is live." />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0b0c0e" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)" />
+<link rel="canonical" href="https://postfork.org/" />
+<link rel="alternate" hreflang="en" href="https://postfork.org/" />
+<link rel="alternate" hreflang="de" href="https://postfork.org/de/" />
+<link rel="alternate" hreflang="x-default" href="https://postfork.org/" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+<link rel="stylesheet" href="/styles.css" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Postfork" />
+<meta property="og:title" content="Postfork — Bitcoin Core with CTV and CSFS from genesis, backed only by pegged bitcoin" />
+<meta property="og:description" content="A pre-launch design specification: Bitcoin Core with BIP-119 (CTV) and BIP-348 (CSFS) active from genesis. No token, no premine. The only asset is pBTC (Postfork), bitcoin pegged in through a BitVM2 reserve. Nothing is live." />
+<meta property="og:url" content="https://postfork.org/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:locale:alternate" content="de_DE" />
+<meta property="og:image" content="https://postfork.org/og.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Postfork: Bitcoin Core with CTV and CSFS from genesis. Design specification, pre-launch." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Postfork — Bitcoin Core with CTV and CSFS from genesis, backed only by pegged bitcoin" />
+<meta name="twitter:description" content="A pre-launch design specification: Bitcoin Core with BIP-119 (CTV) and BIP-348 (CSFS) active from genesis. No token, no premine. The only asset is pBTC (Postfork), bitcoin pegged in through a BitVM2 reserve. Nothing is live." />
+<meta name="twitter:image" content="https://postfork.org/og.png" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Postfork",
+  "url": "https://postfork.org/",
+  "inLanguage": ["en", "de"],
+  "description": "Pre-launch design specification of Postfork: Bitcoin Core with BIP-119 and BIP-348 active from genesis, and pBTC (Postfork), a BitVM2-backed bitcoin peg. Nothing is live."
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="status-strip" role="note"><div class="wrap"><span class="tag">Pre-launch</span><span>Design specification. No code. Nothing described here is live. Can I use it today? <strong>No.</strong></span></div></div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Postfork"><svg viewBox="2 7 28 19" width="30" height="20" aria-hidden="true" focusable="false"><rect class="logo-base" x="3" y="20" width="5" height="5" rx="1"/><rect class="logo-base" x="10" y="20" width="5" height="5" rx="1"/><path class="logo-link" d="M8 22.5h2"/><path class="logo-ghost" d="M16 22.5h7.5"/><rect class="logo-ghost-box" x="24.6" y="20.6" width="3.8" height="3.8" rx="0.8"/><path class="logo-accent-link" d="M15 20.5L17.5 13"/><rect class="logo-accent" x="17" y="8" width="5" height="5" rx="1"/><path class="logo-accent-link" d="M22 10.5h2"/><rect class="logo-accent" x="24" y="8" width="5" height="5" rx="1"/></svg><span>Postfork</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="/#what">Overview</a><a href="/#opcodes">CTV + CSFS</a><a href="/#peg">Peg</a><a href="/#open">Open questions</a><a href="/#status">Status</a><a href="/faq/">FAQ</a><a href="/white-paper/">Whitepaper</a>
+    </nav>
+    <div class="langs" role="group" aria-label="Language">
+      <a href="/" hreflang="en" lang="en" aria-current="true">EN</a>
+      <a href="/de/" hreflang="de" lang="de">DE</a>
+    </div>
+  </div>
+</header>
+<main id="main">
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Design specification · pre-launch</p>
+      <h1 id="hero-title">Bitcoin script with CTV and CSFS, <span class="hl">backed only by bitcoin</span></h1>
+      <p class="lede">Postfork is a proposed new blockchain whose consensus is Bitcoin Core with BIP-119 (<code>OP_CHECKTEMPLATEVERIFY</code>) and BIP-348 (<code>OP_CHECKSIGFROMSTACK</code>) active from block 0. It has no native token, no block subsidy and no premine. Its only asset is <strong>pBTC (Postfork)</strong>: bitcoin pegged in from Bitcoin.</p>
+      <p class="lede-2">The aim is a place to build and use, with real bitcoin instead of valueless test coins, what these two covenant opcodes would enable on Bitcoin. The peg follows the <a href="https://github.com/zk-BTC/zkbtc">zkBTC</a> design: a BitVM2 reserve that anyone may join as an operator, so that the only party you trust with your bitcoin can be you, under the assumptions stated on this page.</p>
+      <ul class="chips" aria-label="Key properties">
+        <li>BIP-119 + BIP-348 from genesis</li>
+        <li>No token · no premine</li>
+        <li>No admin keys · no council</li>
+        <li>BitVM2 peg, adapted from zkBTC</li>
+        <li class="open">Block production: open decision</li>
+      </ul>
+      <div class="actions">
+        <a class="btn btn-primary" href="/white-paper/">Read the whitepaper <small>PDF</small></a>
+        <a class="btn btn-ghost" href="/faq/">FAQ</a>
+        <a class="btn btn-ghost" href="#peg">How the peg works</a>
+      </div>
+    </div>
+    <aside class="spec-card" aria-label="Postfork at a glance">
+      <header><span><span class="dot" aria-hidden="true"></span>spec-v1.0 (draft)</span><span>at a glance</span></header>
+      <dl>
+        <dt>Consensus</dt>
+        <dd>Bitcoin Core + BIP-119 + BIP-348<span class="note">base pin v32.1, provisional; BIPs as written</span></dd>
+        <dt>Opcodes</dt>
+        <dd><code>0xb3</code> CTV, <code>0xcc</code> CSFS, nothing else<span class="note"><code>OP_INTERNALKEY</code> excluded</span></dd>
+        <dt>Issuance</dt>
+        <dd>Subsidy 0 · no premine<span class="note">fees are paid in pBTC</span></dd>
+        <dt>Asset</dt>
+        <dd>pBTC (Postfork)<span class="note">1:1 claim on BTC held in a BitVM2 reserve</span></dd>
+        <dt>Mint finality</dt>
+        <dd>2016 Bitcoin blocks<span class="note">about two weeks; provisional</span></dd>
+        <dt>Admin keys</dt>
+        <dd>None<span class="note">no council, checkpoints or alert key</span></dd>
+        <dt>Blocks</dt>
+        <dd><span class="open">Open decision</span><span class="note">gate G5</span></dd>
+        <dt>Status</dt>
+        <dd>Pre-launch<span class="note">G1 cleared; requirement gates 1–4 and G2–G6 open; no code</span></dd>
+      </dl>
+    </aside>
+  </div>
+</section>
+
+<section class="section" id="what" aria-labelledby="what-title">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">What Postfork is</p>
+      <h2 id="what-title">One chain, one reserve, one asset</h2>
+      <p>Postfork has two halves. The chain: Bitcoin Core consensus with BIP-119 and BIP-348 active from genesis, zero subsidy, and a small, explicitly delimited peg extension. The reserve: a BitVM2 construction on Bitcoin, adapted from zkBTC, that holds the BTC behind every pBTC.</p>
+    </div>
+    <blockquote class="principle">
+      <p>Bitcoin as it will look if CTV and CSFS activate — usable today with real bitcoin, with no new asset, and with a peg whose only trust root can be you.</p>
+      <cite>Root principle of the specification. A design goal, not a status: nothing is usable yet.</cite>
+    </blockquote>
+    <div class="grid grid-3">
+      <article class="card">
+        <h3><span class="ico" aria-hidden="true">01</span>Bitcoin Core, plus two BIPs</h3>
+        <p>Script, opcodes and policy are those of a pinned Bitcoin Core release, with BIP-119 and BIP-348 implemented as written and always on. Every other difference is listed in a register of sixteen deltas. Deviations from the BIPs: none.</p>
+      </article>
+      <article class="card">
+        <h3><span class="ico" aria-hidden="true">02</span>Only bitcoin</h3>
+        <p>No subsidy at any height, no premine, no genesis allocation, no developer fund. pBTC is created only when Postfork consensus verifies a Bitcoin vault deposit at deep finality, and destroyed only by burning it to redeem.</p>
+      </article>
+      <article class="card">
+        <h3><span class="ico branch" aria-hidden="true">03</span>A peg you can operate</h3>
+        <p>Anyone may join the operator set. The set only grows, and every new vault is pre-signed by all current members. Be admitted before the first mint-eligible epoch, and check that you were, and you are a signer of every vault that can ever back a mint.</p>
+      </article>
+    </div>
+
+    <h3 class="muted">What Postfork is not</h3>
+    <ul class="isnot">
+      <li><span>Bitcoin</span><span>A separate chain with its own genesis, its own consensus participants and its own risks. pBTC is a claim on BTC held in a BitVM2 reserve; it is not BTC.</span></li>
+      <li><span>A Bitcoin fork with your BTC on it</span><span>No UTXO snapshot, no airdrop. Postfork starts with an empty UTXO set. You get pBTC only by pegging in.</span></li>
+      <li><span>“Future Bitcoin, guaranteed”</span><span>Bitcoin may activate a different covenant set, different revisions, or nothing. Postfork is Bitcoin Core with BIP-119 and BIP-348 (pinned revisions) active from genesis, not a prediction.</span></li>
+      <li><span>A token project</span><span>There is no token to buy. The only asset is pegged BTC.</span></li>
+      <li><span>Trustless, unqualified</span><span>“Effectively trustless” is a defined term with stated assumptions, and the block-production class matters (<a href="#trust">below</a>).</span></li>
+      <li><span>Private</span><span>Every peg-in, transfer and burn is public, as on Bitcoin.</span></li>
+      <li><span>A rollup</span><span>Postfork has its own consensus. It does not inherit Bitcoin’s ordering unless the Bitcoin-anchored block-production option (H3) is chosen.</span></li>
+      <li><span>The pBTC of pTokens/pNetwork</span><span>Unrelated. See <a href="/faq/#is-this-the-old-pbtc">“Is this the old pBTC?”</a></span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section alt" id="why" aria-labelledby="why-title">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Why real money</p>
+      <h2 id="why-title">Today, CTV and CSFS run only with coins worth nothing</h2>
+      <p>Bitcoin script can check signatures and timelocks, but it cannot restrict where coins go next. Covenant opcodes would add that.</p>
+    </div>
+    <div class="prose">
+      <p>One concrete proposal, published in 2025 under the name <a href="https://ctv-csfs.com/">“CTV + CSFS”</a>, consists of exactly two BIPs: <a href="https://github.com/bitcoin/bips/blob/master/bip-0119.mediawiki">BIP-119</a> and <a href="https://github.com/bitcoin/bips/blob/master/bip-0348.md">BIP-348</a>. Both are <code>Draft</code>. Reference implementations exist for regression testing (Bitcoin Core pull requests <a href="https://github.com/bitcoin/bitcoin/pull/31989">#31989</a> and <a href="https://github.com/bitcoin/bitcoin/pull/32247">#32247</a>, regtest only, open) and on the <a href="https://github.com/bitcoin-inquisition/bitcoin/releases">Bitcoin Inquisition</a> signet. None is active on Bitcoin. Anyone who wants to build with these opcodes today builds with coins that are worth nothing.</p>
+      <p>Postfork proposes a place where the script layer is exactly the proposed one, where the only money is bitcoin, and where nobody has to be trusted with that bitcoin except, at most, oneself.</p>
+    </div>
+    <div class="grid grid-3">
+      <article class="card">
+        <h3>Same opcodes, same bytes</h3>
+        <p>Contracts for Postfork use the opcodes exactly as the BIPs define them. If, and only if, Bitcoin activates the same texts, they port unchanged.</p>
+      </article>
+      <article class="card">
+        <h3>Real bitcoin, no second asset</h3>
+        <p>Every pBTC is backed at mint by BTC in a vault on Bitcoin. Fees are paid in pBTC. There is nothing else on the chain.</p>
+      </article>
+      <article class="card">
+        <h3>A peg that needs no soft fork</h3>
+        <p>The reserve uses only constructions proven on Bitcoin mainnet and does not depend on CTV, CSFS or any other inactive soft fork. The peg cannot wait for the soft fork it emulates.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="opcodes" aria-labelledby="opcodes-title">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">CTV + CSFS</p>
+      <h2 id="opcodes-title">Two opcodes, nothing else</h2>
+      <p>Postfork activates exactly BIP-119 and BIP-348 from block 0, implemented as written. The only change is activation, which the BIPs leave to the deployment.</p>
+    </div>
+    <div class="grid grid-2">
+      <figure class="figure compact">
+        <svg viewBox="0 0 520 230" role="img" aria-labelledby="ctv-t ctv-d" xmlns="http://www.w3.org/2000/svg"><title id="ctv-t">OP_CHECKTEMPLATEVERIFY</title><desc id="ctv-d">A coin locked with a template hash H can only be spent by a transaction whose committed fields hash to H.</desc><rect class="dg-box " x="10" y="30" width="140" height="70" rx="8"/><text class="dg-strong" x="80.0" y="61.5" text-anchor="middle">Coin</text><text class="dg-mono-accent" x="80.0" y="77.5" text-anchor="middle">&lt;H&gt; OP_CTV</text><rect class="dg-box " x="190" y="14" width="160" height="120" rx="8"/><text class="dg-strong" x="270.0" y="46.5" text-anchor="middle">Spending transaction</text><text class="dg-small" x="270.0" y="62.5" text-anchor="middle">version · locktime</text><text class="dg-small" x="270.0" y="78.5" text-anchor="middle">input count · sequences</text><text class="dg-small" x="270.0" y="94.5" text-anchor="middle">output count · outputs</text><text class="dg-small" x="270.0" y="110.5" text-anchor="middle">input index</text><rect class="dg-box accent" x="390" y="30" width="120" height="70" rx="8"/><text class="dg-mono" x="450.0" y="61.5" text-anchor="middle">SHA256(…)</text><text class="dg-small" x="450.0" y="77.5" text-anchor="middle">must equal H</text><path class="dg-line " d="M150 65H188"/><path class="dg-head" d="M188.0 65.0L180.0 69.0L180.0 61.0Z"/><text class="dg-small" x="169" y="56" text-anchor="middle">spend</text><path class="dg-line " d="M350 65H388"/><path class="dg-head" d="M388.0 65.0L380.0 69.0L380.0 61.0Z"/><text class="dg-small" x="369" y="56" text-anchor="middle">hash</text><path class="dg-line accent dash" d="M450 100V168H80V102"/><path class="dg-head accent" d="M80.0 102.0L84.0 110.0L76.0 110.0Z"/><text class="dg-small" x="268" y="186" text-anchor="middle">compare with H</text><text class="dg-small" x="260" y="216" text-anchor="middle">Not committed: input outpoints, spent amounts, witnesses</text></svg>
+        <figcaption><strong>OP_CHECKTEMPLATEVERIFY</strong> (<code>0xb3</code>, formerly <code>OP_NOP4</code>, every script context). A coin commits to the shape of the transaction that spends it: a single SHA256 over version, locktime, scriptSigs (if any), input count, sequences, output count, outputs and input index. The opcode does not pop its argument.</figcaption>
+      </figure>
+      <figure class="figure compact">
+        <svg viewBox="0 0 520 230" role="img" aria-labelledby="csfs-t csfs-d" xmlns="http://www.w3.org/2000/svg"><title id="csfs-t">OP_CHECKSIGFROMSTACK</title><desc id="csfs-d">CSFS pops a public key, a message and a signature and verifies a BIP-340 signature over the message.</desc><rect class="dg-box" x="10" y="14" width="150" height="150" rx="8"/><text class="dg-small" x="85" y="36" text-anchor="middle">stack, top first</text><rect class="dg-box" x="24" y="48" width="122" height="28" rx="5"/><text class="dg-mono" x="85" y="66" text-anchor="middle">pubkey (32 B)</text><rect class="dg-box" x="24" y="84" width="122" height="28" rx="5"/><text class="dg-mono" x="85" y="102" text-anchor="middle">message</text><rect class="dg-box" x="24" y="120" width="122" height="28" rx="5"/><text class="dg-mono" x="85" y="138" text-anchor="middle">signature (64 B)</text><rect class="dg-box accent" x="190" y="49" width="170" height="80" rx="8"/><text class="dg-strong" x="275.0" y="77.5" text-anchor="middle">BIP-340 verify</text><text class="dg-small" x="275.0" y="93.5" text-anchor="middle">signature over the message,</text><text class="dg-small" x="275.0" y="109.5" text-anchor="middle">not over the transaction</text><rect class="dg-box branch" x="395" y="20" width="115" height="54" rx="8"/><text class="dg-text" x="452.5" y="43.5" text-anchor="middle">valid</text><text class="dg-small" x="452.5" y="59.5" text-anchor="middle">push 1, continue</text><rect class="dg-box " x="395" y="104" width="115" height="54" rx="8"/><text class="dg-text" x="452.5" y="127.5" text-anchor="middle">invalid</text><text class="dg-small" x="452.5" y="143.5" text-anchor="middle">script fails</text><path class="dg-line " d="M160 89H188"/><path class="dg-head" d="M188.0 89.0L180.0 93.0L180.0 85.0Z"/><path class="dg-line branch" d="M360 78L393 52"/><path class="dg-head branch" d="M393.0 52.0L389.2 60.1L384.2 53.8Z"/><path class="dg-line " d="M360 100L393 126"/><path class="dg-head" d="M393.0 126.0L384.2 124.2L389.2 117.9Z"/><text class="dg-small" x="260" y="200" text-anchor="middle">Tapscript only · opcode 0xcc, formerly OP_SUCCESS204</text></svg>
+        <figcaption><strong>OP_CHECKSIGFROMSTACK</strong> (<code>0xcc</code>, tapscript only). Verifies a BIP-340 signature over an arbitrary message taken from the stack, not over the spending transaction. No <code>VERIFY</code> variant; each signature costs 50 units of the tapscript validation-weight budget.</figcaption>
+      </figure>
+    </div>
+
+    <h3>Together: rebindable signatures</h3>
+    <figure class="figure">
+      <svg viewBox="0 0 1000 220" role="img" aria-labelledby="rb-t rb-d" xmlns="http://www.w3.org/2000/svg"><title id="rb-t">Rebindable signature: OP_CTV &lt;P&gt; OP_CSFS</title><desc id="rb-d">The witness supplies a signature and a template hash H. CTV checks H against the spending transaction; CSFS checks a signature by key P over H.</desc><rect class="dg-box " x="20" y="40" width="190" height="70" rx="8"/><text class="dg-strong" x="115.0" y="71.5" text-anchor="middle">Witness</text><text class="dg-mono" x="115.0" y="87.5" text-anchor="middle">&lt;sig&gt; &lt;H&gt;</text><rect class="dg-box accent" x="370" y="40" width="260" height="70" rx="8"/><text class="dg-strong" x="500.0" y="71.5" text-anchor="middle">Tapleaf</text><text class="dg-mono-accent" x="500.0" y="87.5" text-anchor="middle">OP_CTV &lt;P&gt; OP_CSFS</text><rect class="dg-box " x="790" y="40" width="190" height="70" rx="8"/><text class="dg-strong" x="885.0" y="71.5" text-anchor="middle">Spending transaction</text><text class="dg-small" x="885.0" y="87.5" text-anchor="middle">must hash to H</text><path class="dg-line " d="M210 75H368"/><path class="dg-head" d="M368.0 75.0L360.0 79.0L360.0 71.0Z"/><text class="dg-small" x="289" y="64" text-anchor="middle">CSFS: sig by P over H</text><path class="dg-line " d="M790 75H632"/><path class="dg-head" d="M632.0 75.0L640.0 71.0L640.0 79.0Z"/><text class="dg-small" x="711" y="64" text-anchor="middle">CTV: template hash = H</text><rect class="dg-box branch" x="45" y="160" width="140" height="44" rx="8"/><text class="dg-strong" x="115.0" y="186.5" text-anchor="middle">Key P</text><path class="dg-line branch" d="M115 160V112"/><path class="dg-head branch" d="M115.0 112.0L119.0 120.0L111.0 120.0Z"/><text class="dg-small" x="125" y="140" text-anchor="start">signs H, now or later</text><rect class="dg-box ghost" x="420" y="160" width="160" height="44" rx="8"/><text class="dg-small" x="500.0" y="186.5" text-anchor="middle">same leaf, any chain</text><path class="dg-line dash" d="M500 110V158"/><text class="dg-small" x="600" y="186" text-anchor="start">a signature over H is valid for every output carrying this leaf</text></svg>
+      <figcaption>A leaf <code>OP_CTV &lt;P&gt; OP_CSFS</code> takes a template hash from the witness, checks it against the spending transaction, and checks a signature by key <code>P</code> over that same hash. The key holder can sign a new template later, for any coin carrying that leaf.</figcaption>
+    </figure>
+
+    <div class="grid grid-2">
+      <div>
+        <pre class="code"><code><span class="c"># witness (top last)</span>
+&lt;sig&gt; &lt;H&gt;
+<span class="c"># tapleaf</span>
+<span class="k">OP_CHECKTEMPLATEVERIFY</span>   <span class="c"># H must match the spending tx; H stays on the stack</span>
+&lt;P&gt;
+<span class="k">OP_CHECKSIGFROMSTACK</span>     <span class="c"># BIP-340 signature by P over H</span></code></pre>
+        <details class="more">
+          <summary>Why not <code>OP_INTERNALKEY</code>?</summary>
+          <div class="body">
+            <p>The proposal published as “CTV + CSFS” (<a href="https://ctv-csfs.com/">open letter</a>; <a href="https://delvingbitcoin.org/t/ctv-csfs-can-we-reach-consensus-on-a-first-step-towards-covenants/1509">Delving Bitcoin</a>) consists of exactly BIP-119 and BIP-348, and the Bitcoin Core reference pull requests cover exactly those two. <a href="https://github.com/bitcoin/bips/blob/master/bip-0349.md">BIP-349</a> (<code>OP_INTERNALKEY</code>) appears only in larger bundles such as <a href="https://bitcoinops.org/en/newsletters/2025/12/05/">LNHANCE</a> and <a href="https://github.com/bitcoin/bips/blob/master/bip-0448.md">BIP-448</a>. Including it would track a different future.</p>
+            <p>It adds no capability: a script can push the key explicitly, at about 8 vbytes per rebindable leaf. Leaving <code>0xcb</code> as <code>OP_SUCCESS203</code> keeps a clean soft-fork slot should Bitcoin activate it. APO, <code>OP_CAT</code>, <code>OP_PAIRCOMMIT</code>, <code>OP_CHECKCONTRACTVERIFY</code>, <code>OP_TEMPLATEHASH</code> and BIP-54 are excluded on the same ground.</p>
+          </div>
+        </details>
+      </div>
+      <div class="callout warn">
+        <span class="label">Hazards, stated rather than hidden</span>
+        <ul class="ticks">
+          <li><strong>Anyone-can-spend on Bitcoin today.</strong> On Bitcoin, where neither opcode is active, a tapscript containing <code>0xcc</code> is an <code>OP_SUCCESS</code> script and <code>&lt;H&gt; OP_CTV</code> is <code>&lt;H&gt; OP_NOP4</code>. BTC sent on Bitcoin to a Postfork covenant script is lost to the first taker. Wallets must refuse to build such transactions.</li>
+          <li><strong>Amount footgun.</strong> CTV does not commit to input amounts. An underfunded single-input template output is unspendable forever; an overfunded one donates the excess to fees (<a href="https://bitcoinops.org/en/newsletters/2026/01/02/">Bitcoin Optech</a>).</li>
+          <li><strong>Cross-chain replay.</strong> A CSFS signature over a template hash is valid for any output carrying the same leaf on any chain where the opcodes are active. Never reuse a CSFS key across chains. Postfork does not add a chain identifier to sighashes or templates, because that would break fidelity.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="peg" aria-labelledby="peg-title">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">pBTC (Postfork)</p>
+      <h2 id="peg-title">The peg: bitcoin in, bitcoin out</h2>
+      <p>pBTC is minted only against a Bitcoin vault deposit that Postfork consensus verifies at deep finality, and redeemed by burning first. The reserve design is zkBTC’s, cited and adapted, not rebranded.</p>
+    </div>
+    <figure class="figure">
+      <svg viewBox="0 0 1120 410" role="img" aria-labelledby="peg-t peg-d" xmlns="http://www.w3.org/2000/svg"><title id="peg-t">pBTC (Postfork) peg flow</title><desc id="peg-d">Peg-in: deposit on Bitcoin, pre-signed MoveToBacked into a NUMS vault, Bitcoin headers tracked by Postfork consensus, mint after 2016 Bitcoin blocks. Peg-out: burn on Postfork, operator fronts the payout on Bitcoin, claims, challenge window, reimbursement from one vault.</desc><rect class="dg-lane" x="0" y="0" width="1120" height="185" rx="12"/><rect class="dg-lane" x="0" y="225" width="1120" height="185" rx="12"/><text class="dg-lane-label" x="20" y="24" text-anchor="start">Bitcoin</text><text class="dg-lane-label" x="20" y="249" text-anchor="start">Postfork</text><rect class="dg-box " x="20" y="80" width="160" height="84" rx="8"/><text class="dg-strong" x="100.0" y="110.5" text-anchor="middle">Deposit</text><text class="dg-small" x="100.0" y="126.5" text-anchor="middle">0.1 / 1 / 10 BTC</text><text class="dg-small" x="100.0" y="142.5" text-anchor="middle">to a deposit taproot</text><rect class="dg-box " x="210" y="80" width="175" height="84" rx="8"/><text class="dg-strong" x="297.5" y="110.5" text-anchor="middle">MoveToBacked</text><text class="dg-small" x="297.5" y="126.5" text-anchor="middle">pre-signed N-of-N,</text><text class="dg-small" x="297.5" y="142.5" text-anchor="middle">commits the claim script</text><rect class="dg-box accent" x="415" y="80" width="175" height="84" rx="8"/><text class="dg-strong" x="502.5" y="110.5" text-anchor="middle">Vault</text><text class="dg-small" x="502.5" y="126.5" text-anchor="middle">NUMS key, no live key</text><text class="dg-small" x="502.5" y="142.5" text-anchor="middle">pre-signed BitVM2 graph</text><rect class="dg-box branch" x="645" y="80" width="140" height="84" rx="8"/><text class="dg-strong" x="715.0" y="110.5" text-anchor="middle">Front payout</text><text class="dg-small" x="715.0" y="126.5" text-anchor="middle">any operator,</text><text class="dg-small" x="715.0" y="142.5" text-anchor="middle">from its own BTC</text><rect class="dg-box " x="805" y="80" width="140" height="84" rx="8"/><text class="dg-strong" x="875.0" y="110.5" text-anchor="middle">Claim</text><text class="dg-small" x="875.0" y="126.5" text-anchor="middle">challenge window,</text><text class="dg-small" x="875.0" y="142.5" text-anchor="middle">anyone may disprove</text><rect class="dg-box branch" x="965" y="80" width="140" height="84" rx="8"/><text class="dg-strong" x="1035.0" y="110.5" text-anchor="middle">Reimbursement</text><text class="dg-small" x="1035.0" y="126.5" text-anchor="middle">exactly the burned</text><text class="dg-small" x="1035.0" y="142.5" text-anchor="middle">amount, one vault</text><path class="dg-line " d="M180 122H208"/><path class="dg-head" d="M208.0 122.0L200.0 126.0L200.0 118.0Z"/><path class="dg-line " d="M385 122H413"/><path class="dg-head" d="M413.0 122.0L405.0 126.0L405.0 118.0Z"/><path class="dg-line branch" d="M785 122H803"/><path class="dg-head branch" d="M803.0 122.0L795.0 126.0L795.0 118.0Z"/><path class="dg-line branch" d="M945 122H963"/><path class="dg-head branch" d="M963.0 122.0L955.0 126.0L955.0 118.0Z"/><path class="dg-line dash" d="M502 80V52H1035V78"/><path class="dg-head" d="M1035.0 78.0L1031.0 70.0L1039.0 70.0Z"/><text class="dg-small" x="768" y="46" text-anchor="middle">reimbursement only along the pre-signed graph</text><rect class="dg-box " x="20" y="300" width="160" height="84" rx="8"/><text class="dg-strong" x="100.0" y="330.5" text-anchor="middle">BtcView</text><text class="dg-small" x="100.0" y="346.5" text-anchor="middle">Bitcoin headers,</text><text class="dg-small" x="100.0" y="362.5" text-anchor="middle">most work, in consensus</text><rect class="dg-box accent" x="235" y="300" width="175" height="84" rx="8"/><text class="dg-strong" x="322.5" y="330.5" text-anchor="middle">Mint</text><text class="dg-small" x="322.5" y="346.5" text-anchor="middle">after 2016 Bitcoin blocks</text><text class="dg-small" x="322.5" y="362.5" text-anchor="middle">clauses M1–M11</text><rect class="dg-box " x="440" y="300" width="175" height="84" rx="8"/><text class="dg-strong" x="527.5" y="330.5" text-anchor="middle">pBTC at claim script</text><text class="dg-small" x="527.5" y="346.5" text-anchor="middle">any Core + CTV + CSFS</text><text class="dg-small" x="527.5" y="362.5" text-anchor="middle">script, unrestricted</text><rect class="dg-box branch" x="645" y="300" width="160" height="84" rx="8"/><text class="dg-strong" x="725.0" y="330.5" text-anchor="middle">Burn</text><text class="dg-small" x="725.0" y="346.5" text-anchor="middle">PFB1 record,</text><text class="dg-small" x="725.0" y="362.5" text-anchor="middle">final first, no un-burn</text><path class="dg-line dash" d="M100 164V298"/><path class="dg-head" d="M100.0 298.0L96.0 290.0L104.0 290.0Z"/><text class="dg-small" x="110" y="205" text-anchor="start">headers relayed</text><path class="dg-line " d="M180 342H233"/><path class="dg-head" d="M233.0 342.0L225.0 346.0L225.0 338.0Z"/><path class="dg-line accent dash" d="M297 164V298"/><path class="dg-head accent" d="M297.0 298.0L293.0 290.0L301.0 290.0Z"/><text class="dg-small" x="307" y="205" text-anchor="start">proof of MoveToBacked</text><text class="dg-small" x="307" y="220" text-anchor="start">at depth ≥ 2016</text><path class="dg-line accent" d="M410 342H438"/><path class="dg-head accent" d="M438.0 342.0L430.0 346.0L430.0 338.0Z"/><path class="dg-line " d="M615 342H643"/><path class="dg-head" d="M643.0 342.0L635.0 346.0L635.0 338.0Z"/><path class="dg-line branch" d="M725 300V166"/><path class="dg-head branch" d="M725.0 166.0L729.0 174.0L721.0 174.0Z"/><text class="dg-small" x="735" y="205" text-anchor="start">operators observe burns</text><text class="dg-small" x="875" y="205" text-anchor="start">watchtowers run both</text><text class="dg-small" x="875" y="220" text-anchor="start">Bitcoin and Postfork nodes</text><circle class="dg-step-bg" cx="22" cy="82" r="10"/><text class="dg-step" x="22" y="86" text-anchor="middle">1</text><circle class="dg-step-bg" cx="212" cy="82" r="10"/><text class="dg-step" x="212" y="86" text-anchor="middle">2</text><circle class="dg-step-bg" cx="417" cy="82" r="10"/><text class="dg-step" x="417" y="86" text-anchor="middle">3</text><circle class="dg-step-bg" cx="237" cy="302" r="10"/><text class="dg-step" x="237" y="306" text-anchor="middle">4</text><circle class="dg-step-bg" cx="442" cy="302" r="10"/><text class="dg-step" x="442" y="306" text-anchor="middle">5</text><circle class="dg-step-bg branch" cx="647" cy="302" r="10"/><text class="dg-step" x="647" y="306" text-anchor="middle">6</text><circle class="dg-step-bg branch" cx="647" cy="82" r="10"/><text class="dg-step" x="647" y="86" text-anchor="middle">7</text><circle class="dg-step-bg branch" cx="807" cy="82" r="10"/><text class="dg-step" x="807" y="86" text-anchor="middle">8</text><circle class="dg-step-bg branch" cx="967" cy="82" r="10"/><text class="dg-step" x="967" y="86" text-anchor="middle">9</text></svg>
+      <figcaption>Steps 1–5: peg-in. Steps 6–9: peg-out. The gatekeeper, if one is ever set, appears nowhere in the peg-out path. Values such as 2016 blocks and the denominations are provisional launch values.</figcaption>
+    </figure>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>Peg-in</h3>
+        <ol class="steps">
+          <li><strong>Join (optional, recommended)</strong>Register into the operator set before the first mint-eligible epoch.</li>
+          <li><strong>Deposit</strong>Pay one denomination (0.1, 1 or 10 BTC) to a deposit taproot. Fix your Postfork claim script first.</li>
+          <li><strong>Presign and vault</strong>All operators of the epoch pre-sign the deposit’s BitVM2 graph, including <code>MoveToBacked</code>, which commits your claim script; you co-sign. The vault has a NUMS internal key: no key-path spend, no live signing key.</li>
+          <li><strong>Finality</strong>Wait until <code>MoveToBacked</code> is 2016 Bitcoin blocks deep in BtcView, the Bitcoin header chain that Postfork consensus tracks. About two weeks.</li>
+          <li><strong>Mint</strong>Submit the mint transaction. Every Postfork full node checks the proof (clauses M1–M11). pBTC appear at your claim script, minus the fee.</li>
+        </ol>
+        <p class="small muted">If operators never fire <code>MoveToBacked</code>, the depositor refunds after a timelock. Once <code>MoveToBacked</code> fires without a later mint, the BTC is an irrevocable, consented contribution to the reserve.</p>
+      </div>
+      <div class="card">
+        <h3>Peg-out (burn first)</h3>
+        <ol class="steps branch">
+          <li><strong>Burn</strong>Publish a burn of an available vault denomination, naming your Bitcoin key and a maximum fee. There is no un-burn.</li>
+          <li><strong>Front</strong>After the burn is final on Postfork, any registered operator, including you if you joined, pays you on Bitcoin from its own funds.</li>
+          <li><strong>Claim</strong>The operator claims reimbursement along the pre-signed graph.</li>
+          <li><strong>Challenge</strong>During the window, anyone running a Bitcoin and a Postfork full node may disprove a false claim. A successful disprove slashes the operator’s bond and pays the challenger a bounty on Bitcoin.</li>
+          <li><strong>Reimbursement</strong>Without a successful disprove, the operator receives exactly the burned amount from one vault.</li>
+        </ol>
+        <p class="small muted">Burn-first has a cost: a burn that no operator serves, for example because the maximum fee was set too low, stays burned with no payout until someone serves it.</p>
+      </div>
+    </div>
+
+    <div class="callout claim" id="trust">
+      <span class="label">Effectively trustless: a defined term</span>
+      <p><strong>You do not trust other operators with your bitcoin. You are an operator. You run your own nodes.</strong> It does not mean “zero assumptions”, and it does not mean “trust a company, a federation, a block producer or a gatekeeper”.</p>
+      <ol>
+        <li><strong>Join the operator set.</strong> Anyone may register. Nobody leaves and nobody is removed. Every new vault is pre-signed by the current full set.</li>
+        <li><strong>Join before the first mint.</strong> If you, or a party you treat as honest, are in the set before the first mint-eligible epoch, every vault that can ever back a mint includes you, and you do not sign a malicious graph. That closes Attack B. Registering is not being admitted: the current members certify each new epoch and can censor joiners, so verify on your own node that you are in the set of the first mint-eligible epoch.</li>
+        <li><strong>Run your own nodes.</strong> A Postfork full node and a Bitcoin full node. Your wallet trusts your nodes.</li>
+        <li><strong>Exit yourself.</strong> Once in the set, you may front and reclaim your own peg-out from vaults whose epoch set includes you.</li>
+        <li><strong>Operators cannot steal under:</strong> 1-of-N setup honesty; at least one honest live challenger acting within every relevant window; sound circuit, graph and validity-proof cryptography; a Bitcoin adversary below about 50% of hashrate (inherited from Bitcoin); and the Postfork-side condition of the block-production class in force. Worst case under those assumptions: freeze, not theft.</li>
+        <li><strong>What this does not close.</strong> Holders who never register depend on at least one live registered operator. A censoring block-production majority can delay burns. A frozen coin is not made recoverable.</li>
+      </ol>
+      <p class="small">The claim may be made only for a deployment that has cleared every launch gate, runs a permitted block-production class and has the Postfork validity proof. Today none of that holds.</p>
+      <p class="small"><strong>Prominent claim, verbatim from the specification (§11.3):</strong> pBTC is effectively trustless only in the self-operator sense of §1.1.1, only for the block-production class in force, and only after all gates clear. The worst case under the stated assumptions is freeze, not theft, and a freeze may be permanent.</p>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="callout verbatim">
+        <span class="label">When is pBTC safe</span>
+        <p>pBTC is safe for you if you (or an operator you trust) joined the operator set before the first mint-eligible epoch and refuse malicious graphs, at least one honest challenger watches both chains and acts in time, the cryptography and the Postfork validity proof are sound, Bitcoin's hashrate majority is honest, and the block-production class in force is one that §11.2 permits for pBTC — and even then, the worst case is a freeze, which is not theft but may never be recoverable.</p>
+        <p class="small muted">Verbatim from the specification, §9.3. §11.2 lists the permitted block-production classes.</p>
+      </div>
+      <div class="callout warn">
+        <span class="label">Freeze is not theft; “not theft” is not “recoverable”</span>
+        <p>Under the stated assumptions, the worst case of a dishonest operator, a stuck graph or a vanished operator set is that vaults or burned coins freeze. No one gains them. That is not theft. It is also not recovery: there is no council, no admin key and no rescue path. A frozen vault may stay frozen forever.</p>
+        <p class="small">A soundness bug in the BitVM2 graph, the reimbursement statement or the validity proof can enable theft, as can a consensus bug shared by nodes and the validity-proof specification.</p>
+      </div>
+    </div>
+
+    <details class="more">
+      <summary>What nobody can do, and why</summary>
+      <div class="body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th scope="col">Action</th><th scope="col">Why it fails</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Mint pBTC without a vault deposit</th><td>A mint needs a proven <code>MoveToBacked</code> at depth ≥ 2016 on BtcView; full nodes reject anything else. Against the BitVM2 verifier this also needs the Postfork validity proof (gate G4, Attack V).</td></tr>
+              <tr><th scope="row">Mint twice from one deposit</th><td>Each vault outpoint can be consumed once (clause M8).</td></tr>
+              <tr><th scope="row">Redirect a mint</th><td>The claim script is committed in the pre-signed, depositor-co-signed <code>MoveToBacked</code>.</td></tr>
+              <tr><th scope="row">Freeze, blacklist or claw back pBTC</th><td>No such rule exists.</td></tr>
+              <tr><th scope="row">Block a burn’s redemption (gatekeeper)</th><td>Peg-out has no gatekeeper step.</td></tr>
+              <tr><th scope="row">Move vault BTC outside the graph</th><td>NUMS internal key, no live signing key, N-of-N presign with epoch-secret deletion.</td></tr>
+              <tr><th scope="row">Remove an operator</th><td>The set is growth-only: no leave, no kick after admission.</td></tr>
+              <tr><th scope="row">Change a parameter of the running chain</th><td>No governance function. Peg parameters are pinned in the genesis block; changing them means a new chain, which holders reach only by burning and re-pegging.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+
+    <details class="more">
+      <summary>Attacks and residual risks</summary>
+      <div class="body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th scope="col">Attack</th><th scope="col">What it is</th><th scope="col">Closed by</th><th scope="col">Residual</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">A</th><td>Mint against a <code>MoveToBacked</code> on a private Bitcoin fork</td><td>Most-work header tracking in consensus + 2016-block depth</td><td>Bitcoin-class (majority hashrate)</td></tr>
+              <tr><th scope="row">H</th><td>Producers withhold honest Bitcoin headers</td><td>Any honest relayer; node safety mode</td><td>Needs producer collusion and 2016 Bitcoin-difficulty blocks, but no Bitcoin majority: mint canonicity depends on block production</td></tr>
+              <tr><th scope="row">B</th><td>A Sybil epoch drains its own vault, redeems against honest vaults</td><td>Growth-only operator set + registration-only first epochs, for an admitted operator</td><td>Prefix for late joiners; open for anyone a genesis captor kept out</td></tr>
+              <tr><th scope="row">F</th><td>Burn on a private Postfork fork, get reimbursed on Bitcoin</td><td>Postfork canonicity check in the reimbursement statement + burn depth</td><td>Class of the block-production option</td></tr>
+              <tr><th scope="row">V</th><td>Mint from an invalid Postfork state, then burn</td><td>Postfork validity proof (gate G4, not mainnet-proven)</td><td>Shared consensus or specification bug: theft possible</td></tr>
+              <tr><th scope="row">Q</th><td>A signing quorum signs two forks</td><td>Only by not using a quorum as safety source</td><td>Quorum honesty</td></tr>
+              <tr><th scope="row">S</th><td>Producers censor burns, mints or headers</td><td>Nothing in consensus</td><td>Liveness</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small muted">The specification lists twenty-two residual assumptions, including the premise risk that Bitcoin may activate a different covenant set or nothing.</p>
+      </div>
+    </details>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>Optional gatekeeper</h3>
+        <p>A genesis-pinned key that can only refuse new mints, for source-of-funds screening. No freeze list, no clawback, no role in transfers, burns, payouts or challenges. <strong>The product default is none.</strong> If set, it censors all new peg-ins of the chain, and it is never what makes pBTC safe.</p>
+      </div>
+      <div class="card">
+        <h3>One more limit than zkBTC</h3>
+        <p>zkBTC follows one light client, Bitcoin. Postfork has its own consensus, so its peg-out verifier must follow a Bitcoin and a Postfork light client. The peg can be no stronger than the weaker of the Bitcoin-side reserve and what the BitVM2 verifier can establish about Postfork (<a href="https://bitvm.org/bitvm_bridge.pdf">BitVM2 bridge paper</a>).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="uses" aria-labelledby="uses-title">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Use cases</p>
+      <h2 id="uses-title">What the opcodes enable</h2>
+      <p>After the mint, pBTC are ordinary Postfork outputs. Any script valid under Bitcoin Core with BIP-119 and BIP-348 works, and nothing in the peg constrains transfers. The specification names these uses; it does not ship applications.</p>
+    </div>
+    <div class="grid grid-4">
+      <article class="card"><h3>Payment trees</h3><p>One output commits, through CTV templates, to a tree of transactions that pays many recipients later.</p><p class="meta">CTV</p></article>
+      <article class="card"><h3>Vaults</h3><p>Coins that can only move along pre-committed transactions, for example a withdrawal path with a delay.</p><p class="meta">CTV</p></article>
+      <article class="card"><h3>Rebindable signatures</h3><p>A key signs a template hash instead of a transaction, and can sign a new template later for any coin carrying the leaf.</p><p class="meta">CTV + CSFS</p></article>
+      <article class="card"><h3>LN-Symmetry-style channels</h3><p>Payment channels built on rebindable signatures.</p><p class="meta">CTV + CSFS</p></article>
+      <article class="card"><h3>Ark-style timeout trees</h3><p>Shared outputs that unroll into individual outputs along committed templates.</p><p class="meta">CTV</p></article>
+      <article class="card"><h3>DLCs</h3><p>Contracts that settle against an oracle’s BIP-340 attestation, checked in script.</p><p class="meta">CTV + CSFS</p></article>
+      <article class="card"><h3>Delegation</h3><p>A key holder authorizes a spend by signing a message that the script verifies.</p><p class="meta">CSFS</p></article>
+      <article class="card"><h3>Mint toward a covenant</h3><p>A claim script cannot be a bare CTV template: the mint carries its own proof as an output, so the template would have to commit to itself. A claim leaf that checks a CTV hash signed with CSFS after the proof is known can still send pBTC into a covenant; otherwise mint to a key and spend into the covenant.</p><p class="meta">clause M10</p></article>
+    </div>
+    <p class="small muted">Every use carries the script hazards above. Fees on templates must be pre-committed, paid by an anchor output, or paid by committed extra inputs.</p>
+  </div>
+</section>
+
+<section class="section alt" id="principles" aria-labelledby="principles-title">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Principles</p>
+      <h2 id="principles-title">What the design refuses to trade away</h2>
+      <p>Each principle is a numbered requirement of the specification. Where a decision does not follow from the root principle, it is labelled as a trade-off.</p>
+    </div>
+    <div class="grid grid-3">
+      <article class="card"><h3>No token, no premine</h3><p>Block subsidy zero at every height. No premine, genesis allocation, developer fund or founder reward. Block producers earn pBTC fees only.</p><p class="meta">REQ-2</p></article>
+      <article class="card"><h3>No admin keys, no council</h3><p>No emergency key, alert key, hardcoded checkpoint or governance function, in any edition. The design refuses the trust root of a security council and pays for it with irreversibility.</p><p class="meta">REQ-6</p></article>
+      <article class="card"><h3>Core fidelity</h3><p>Every difference to the pinned Bitcoin Core release is in the delta register. An implementation that differs anywhere else does not conform.</p><p class="meta">REQ-1</p></article>
+      <article class="card"><h3>Effectively trustless, with stated assumptions</h3><p>You are an operator, you run your own nodes, you trust nobody else with your bitcoin, under the listed assumptions, for a permitted block-production class, and only after all gates clear.</p><p class="meta">§1.1.1</p></article>
+      <article class="card"><h3>Mainnet-proven dependencies</h3><p>The reserve uses only constructions proven on Bitcoin mainnet. Anything that is not mainnet-proven is a named, blocking launch gate.</p><p class="meta">REQ-7</p></article>
+      <article class="card"><h3>Exit without permission</h3><p>Every holder can burn and obtain BTC without any gatekeeper. Anyone may become an operator, including the holder.</p><p class="meta">REQ-4</p></article>
+    </div>
+
+    <details class="more">
+      <summary>The complete delta to Bitcoin Core (D-01 to D-16)</summary>
+      <div class="body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th scope="col">ID</th><th scope="col">Delta</th><th scope="col">Class</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">D-01</th><td>Chain identity: genesis, message start, ports, address prefix (<code>pf</code>), Base58 prefixes, coin type</td><td>identity</td></tr>
+              <tr><th scope="row">D-02</th><td>Block subsidy 0 at every height</td><td>consensus</td></tr>
+              <tr><th scope="row">D-03</th><td>All Bitcoin mainnet soft forks buried from genesis; no versionbits deployments</td><td>consensus</td></tr>
+              <tr><th scope="row">D-04</th><td>BIP-119 <code>OP_CHECKTEMPLATEVERIFY</code> active from genesis</td><td>consensus</td></tr>
+              <tr><th scope="row">D-05</th><td>BIP-348 <code>OP_CHECKSIGFROMSTACK</code> active from genesis</td><td>consensus</td></tr>
+              <tr><th scope="row">D-06</th><td>No pre-activation discouragement for CTV/CSFS; bare CTV standard; upgrade discouragement kept</td><td>policy</td></tr>
+              <tr><th scope="row">D-07</th><td>Peg records: tagged <code>OP_RETURN</code> outputs with strict format rules</td><td>consensus</td></tr>
+              <tr><th scope="row">D-08</th><td>BtcView: Bitcoin header relay and acceptance</td><td>consensus</td></tr>
+              <tr><th scope="row">D-09</th><td>Operator-epoch registration, equivocation freeze, first mint-eligible epoch</td><td>consensus</td></tr>
+              <tr><th scope="row">D-10</th><td>Peg-in input, mint clauses M1–M11, consumed-deposit set</td><td>consensus</td></tr>
+              <tr><th scope="row">D-11</th><td>Burn record validation</td><td>consensus</td></tr>
+              <tr><th scope="row">D-12</th><td>Optional gatekeeper signature on mints (default: none)</td><td>consensus</td></tr>
+              <tr><th scope="row">D-13</th><td>Block production: header extension, fork choice or block challenge, difficulty and interval</td><td class="verdict-bad">open</td></tr>
+              <tr><th scope="row">D-14</th><td>No hardcoded checkpoints; <code>assumevalid</code> unset and <code>minimumchainwork</code> 0 at first release</td><td>identity</td></tr>
+              <tr><th scope="row">D-15</th><td>Peg-transaction relay policy; node safety mode</td><td>policy</td></tr>
+              <tr><th scope="row">D-16</th><td>Mempool re-validation of peg transactions when BtcView changes</td><td>policy</td></tr>
+            </tbody>
+            <caption>Explicitly unchanged: serialization, signature hashes, Taproot and Tapscript (except <code>0xcc</code>), block weight, sigops, UTXO model, timelocks, coinbase maturity, fee, RBF, package and TRUC policy, P2P, PSBT.</caption>
+          </table>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section class="section" id="open" aria-labelledby="open-title">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Open questions</p>
+      <h2 id="open-title">Who produces blocks? Not decided</h2>
+      <p>How Postfork blocks are produced is an open decision (gate G5). No option is adopted. It matters because the peg can be no stronger than what its verifier can establish about Postfork, and whether a burn is canonical depends on the block-production rule. Mints depend on it too: producers who censor honest Bitcoin headers can, with 2016 Bitcoin-difficulty blocks from a minority miner, make a mint against a non-canonical Bitcoin branch valid (Attack H).</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Option</th><th scope="col">How blocks are made</th><th scope="col">Burn canonicity rests on</th><th scope="col">In the specification</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">O1</th><td>Merge mining (AuxPoW), fee-only in pBTC, as <a href="https://en.bitcoin.it/wiki/Merged_mining_specification">specified for Namecoin</a></td><td>Attacker below 50% of merge-mining work</td><td>Trade-off; weaker than Bitcoin-class, must be stated</td></tr>
+          <tr><th scope="row">O2</th><td>Own SHA-256 proof of work, fee-only</td><td>Postfork-only hashrate, zero before the first mint</td><td class="verdict-bad">Reject for a real-money peg</td></tr>
+          <tr><th scope="row">O3</th><td>Federated k-of-n signing (<a href="https://github.com/bitcoin/bips/blob/master/bip-0325.mediawiki">signet-style block challenge</a>)</td><td>No k-of-n equivocation</td><td class="verdict-bad">Reject as safety source</td></tr>
+          <tr><th scope="row">H1</th><td>O1 plus non-binding pre-confirmations</td><td>As O1; pre-confirmations have no peg role</td><td>As O1</td></tr>
+          <tr><th scope="row">H2</th><td>O3 plus validity proof</td><td>Quorum non-equivocation</td><td>Transitional profile, not pBTC; trust-model change; no “effectively trustless” claim</td></tr>
+          <tr><th scope="row">H3</th><td>Bitcoin-anchored fork choice: block hashes committed on Bitcoin; the chain follows the first valid anchor per height in Bitcoin’s most-work chain</td><td>Bitcoin hashrate majority (inherited)</td><td class="verdict-good">Best fit; new fork-choice rule; open questions on data availability and anchor funding</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid grid-2">
+      <div class="callout">
+        <span class="label">Non-binding recommendation</span>
+        <p>H3 for fork choice, so that burn canonicity reduces to Bitcoin. O1 merge mining as the default way blocks are proposed. Optional pre-confirmations with no peg role. The Postfork validity proof as a blocking gate in every case. Reject O2 for a real-money peg; reject O3 as a safety source.</p>
+        <p class="small muted">This records the direction the research supports. It decides nothing. A fallback to O1 alone must state that burn canonicity rests on the merge-mining majority.</p>
+      </div>
+      <div class="callout warn">
+        <span class="label">Merge mining does not inherit Bitcoin’s security</span>
+        <p>Joining costs a Bitcoin miner almost nothing, and for the same reason an attack by a large pool costs it no Bitcoin revenue. Merge-mined chains have operated with single pools holding majorities for long periods (<a href="https://eprint.iacr.org/2017/791">“Merged Mining: Curse or Cure?”</a>). Fee-only mining is not security-equivalent to subsidized mining (<a href="https://www.cs.princeton.edu/~smattw/CKWN-CCS16.pdf">CCS 2016</a>).</p>
+      </div>
+    </div>
+    <h3>Other open questions</h3>
+    <ul class="ticks">
+      <li><strong>Validity proof:</strong> which proof system proves Postfork block validity inside BitVM2, and whether proving fits inside the challenge window (gate G4).</li>
+      <li><strong>Data availability:</strong> how Bitcoin-side challengers obtain Postfork data in time; under H3, what happens to an anchored block whose data is withheld, and who pays for anchors.</li>
+      <li><strong>Genesis capture:</strong> a party that registers the first epoch could refuse to certify later ones and freeze peg-ins, or certify them with its own Sybil identities only while censoring honest joiners and then mint against Sybil-only vaults. The registration-only epochs do not prevent this. Until a mitigation is specified and adversarially reviewed, users must verify that they, or an operator they trust, are in the set of the first mint-eligible epoch.</li>
+      <li><strong>Chain identifiers:</strong> registering the address prefixes and coin type, and re-pinning the BIP revisions and the Bitcoin Core base release at launch.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section alt" id="status" aria-labelledby="status-title">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Status</p>
+      <h2 id="status-title">Pre-launch. Every gate except G1 open</h2>
+      <p>Postfork is a design specification. There is no code, no running chain and no pBTC. Both gate families below, the four requirement gates and the maturity gates G1–G6, must clear before anything may be called pBTC or described as launched. Specifying a rule, an encoding or a number does not clear a gate. There are no dates.</p>
+    </div>
+    <ol class="gates">
+      <li><span class="id">A.1</span><span class="what"><strong>Requirement gate 1: growth-only operator set encoded</strong><span>PF-R-09 and anti-domination encoded in the operator policy, with the registration-only first epochs enforced in consensus.</span></span><span class="badge open">Open</span></li>
+      <li><span class="id">A.2</span><span class="what"><strong>Requirement gate 2: setup integrity</strong><span>N-of-N ceremony integrity for every dispute path, watchtower floor, anti-grief restart rule, and an MPC ceremony with independent contributors for any circuit-specific setup unless a transparent system is demonstrated.</span></span><span class="badge open">Open</span></li>
+      <li><span class="id">A.3</span><span class="what"><strong>Requirement gate 3: holder-to-operator onboarding</strong><span>Documented and implemented in at least one wallet.</span></span><span class="badge open">Open</span></li>
+      <li><span class="id">A.4</span><span class="what"><strong>Requirement gate 4: challenger economics</strong><span>Challenger bounty emitted in the live graph and re-checked against the worst-case dispute cost, including Postfork counter-chains.</span></span><span class="badge open">Open</span></li>
+      <li><span class="id">G1</span><span class="what"><strong>BitVM2 verifier mainnet-proven</strong><span>BitVM2-family bridges are live on Bitcoin mainnet: Bitlayer since 2025-07 (<a href="https://blockworks.com/news/bitvm-implementation-stage">Blockworks</a>), Citrea Clementine since 2026-01 (<a href="https://docs.citrea.xyz/essentials/introduction.md">Citrea docs</a>).</span></span><span class="badge cleared">Cleared</span></li>
+      <li><span class="id">G2</span><span class="what"><strong>Open operator market for pBTC operational</strong><span>Permissionless join; registration-only epochs formed on a public test deployment; onboarding run end to end by an unaffiliated operator.</span></span><span class="badge open">Open</span></li>
+      <li><span class="id">G3</span><span class="what"><strong>Reimbursement statement for Postfork burns demonstrated</strong><span>Including cumulative-work checks on both chains, challenger-bounty binding and measured dispute cost.</span></span><span class="badge open">Open</span></li>
+      <li><span class="id">G4</span><span class="what"><strong>Postfork validity proof demonstrated inside BitVM2</strong><span>Proving Postfork block validation from genesis, with the peg rules implemented independently of the node code and negative controls.</span></span><span class="badge open">Open</span></li>
+      <li><span class="id">G5</span><span class="what"><strong>Block-production decision closed</strong><span>Option fully specified, adversarially reviewed, burn depth pinned, bootstrap plan stated.</span></span><span class="badge open">Open decision</span></li>
+      <li><span class="id">G6</span><span class="what"><strong>Consensus conformance and launch pins frozen</strong><span>BIP-119 and BIP-348 test vectors and the Bitcoin Core test suite pass; every provisional value frozen.</span></span><span class="badge open">Open</span></li>
+    </ol>
+    <p class="small muted">Any BTC-backed asset on a Postfork-rules chain that does not meet the full specification, such as a custodial or federated bridge, a deployment without the validity proof, or a test deployment, must use a different name and must not promise migration into pBTC. Test deployments may use “tpBTC (Postfork test)” for valueless test coins only.</p>
+  </div>
+</section>
+
+<section class="section" id="sources" aria-labelledby="sources-title">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Read further</p>
+      <h2 id="sources-title">Paper, basis and sources</h2>
+      <p>The specification is the single normative document. The whitepaper, this site and the FAQ are informative and derive from it; where they simplify, the specification governs.</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="card">
+        <h3>Postfork</h3>
+        <ul class="links">
+          <li><a href="/white-paper/">Whitepaper (English, PDF)</a></li>
+          <li><a href="/de/white-paper/" hreflang="de">Whitepaper (German, PDF)</a></li>
+          <li><a href="/faq/">FAQ</a></li>
+          <li><a href="https://github.com/postfork">github.com/postfork</a> <span class="muted small">(specification: publication planned)</span></li>
+          <li>X: @postfork <span class="muted small">(planned; not yet secured, so not linked)</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Basis of the peg</h3>
+        <ul class="links">
+          <li><a href="https://github.com/zk-BTC/zkbtc">zkBTC specification</a> (<code>spec/ZKBTC_TOKEN.md</code>, pinned commit <code>0f0582a</code>)</li>
+          <li><a href="https://zkbtc.com/white-paper/">zkBTC whitepaper</a></li>
+          <li><a href="https://bitvm.org/bitvm_bridge.pdf">BitVM2: Bridging Bitcoin to Second Layers</a></li>
+          <li><a href="https://eprint.iacr.org/2025/776">Clementine, ePrint 2025/776</a></li>
+          <li><a href="https://docs.zkcoins.com">zkCoins documentation</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>BIPs and proposal</h3>
+        <ul class="links">
+          <li><a href="https://github.com/bitcoin/bips/blob/master/bip-0119.mediawiki">BIP-119 OP_CHECKTEMPLATEVERIFY</a></li>
+          <li><a href="https://github.com/bitcoin/bips/blob/master/bip-0348.md">BIP-348 OP_CHECKSIGFROMSTACK</a></li>
+          <li><a href="https://ctv-csfs.com/">CTV + CSFS open letter</a></li>
+          <li><a href="https://bitcoinops.org/en/topics/op_checktemplateverify/">Bitcoin Optech: CTV topic</a></li>
+          <li><a href="https://github.com/bitcoin/bitcoin/releases">Bitcoin Core releases</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <a class="brand" href="/"><svg viewBox="2 7 28 19" width="30" height="20" aria-hidden="true" focusable="false"><rect class="logo-base" x="3" y="20" width="5" height="5" rx="1"/><rect class="logo-base" x="10" y="20" width="5" height="5" rx="1"/><path class="logo-link" d="M8 22.5h2"/><path class="logo-ghost" d="M16 22.5h7.5"/><rect class="logo-ghost-box" x="24.6" y="20.6" width="3.8" height="3.8" rx="0.8"/><path class="logo-accent-link" d="M15 20.5L17.5 13"/><rect class="logo-accent" x="17" y="8" width="5" height="5" rx="1"/><path class="logo-accent-link" d="M22 10.5h2"/><rect class="logo-accent" x="24" y="8" width="5" height="5" rx="1"/></svg><span>Postfork</span></a>
+        <p class="small">Bitcoin Core with BIP-119 and BIP-348 active from genesis, and pBTC (Postfork), a BitVM2-backed bitcoin peg. Pre-launch design specification. Nothing is live.</p>
+        <p class="small">Informative only. Where this site simplifies, the specification governs.</p>
+      </div>
+      <div>
+        <h2>Project</h2>
+        <ul>
+          <li><a href="/white-paper/">Whitepaper (EN, PDF)</a></li>
+          <li><a href="/de/white-paper/" hreflang="de">Whitepaper (DE, PDF)</a></li>
+          <li><a href="/faq/">FAQ</a></li>
+          <li><a href="/#status">Status and launch gates</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Elsewhere</h2>
+        <ul>
+          <li><a href="https://github.com/postfork">GitHub: postfork</a></li>
+          <li>X: @postfork <span class="muted">(planned; not yet secured, so not linked)</span></li>
+          <li><a href="https://github.com/zk-BTC/zkbtc">zkBTC, basis of the peg design</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="fine">The specification (edition spec-v1.0, draft) is the single normative document; its publication under the GitHub organisation postfork is planned. Site content under the MIT License. Postfork has no relation to the pTokens/pNetwork token also called pBTC.</p>
+  </div>
+</footer>
+<script src="/site.js" defer></script>
+</body>
+</html>

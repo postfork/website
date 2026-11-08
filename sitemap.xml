@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://postfork.org/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://postfork.org/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://postfork.org/de/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://postfork.org/" />
+  </url>
+  <url>
+    <loc>https://postfork.org/de/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://postfork.org/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://postfork.org/de/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://postfork.org/" />
+  </url>
+  <url>
+    <loc>https://postfork.org/white-paper/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://postfork.org/white-paper/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://postfork.org/de/white-paper/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://postfork.org/white-paper/" />
+  </url>
+  <url>
+    <loc>https://postfork.org/de/white-paper/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://postfork.org/white-paper/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://postfork.org/de/white-paper/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://postfork.org/white-paper/" />
+  </url>
+  <url>
+    <loc>https://postfork.org/faq/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://postfork.org/faq/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://postfork.org/de/faq/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://postfork.org/faq/" />
+  </url>
+  <url>
+    <loc>https://postfork.org/de/faq/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://postfork.org/faq/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://postfork.org/de/faq/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://postfork.org/faq/" />
+  </url>
+</urlset>
