@@ -1,0 +1,26 @@
+# Paper URLs: 200 proxy so the address bar keeps the clean path.
+/white-paper/              /files/postfork-whitepaper.pdf     200
+/white-paper/index.html    /files/postfork-whitepaper.pdf     200
+/de/white-paper/           /files/postfork-whitepaper.de.pdf  200
+/de/white-paper/index.html /files/postfork-whitepaper.de.pdf  200
+
+# Aliases to canonical trailing-slash paths.
+/whitepaper        /white-paper/     301
+/whitepaper/       /white-paper/     301
+/white-paper       /white-paper/     301
+/paper             /white-paper/     301
+/paper/            /white-paper/     301
+/faq               /faq/             301
+/FAQ               /faq/             301
+/FAQ/              /faq/             301
+/en                /                 301
+/en/               /                 301
+/de                /de/              301
+/de/whitepaper     /de/white-paper/  301
+/de/whitepaper/    /de/white-paper/  301
+/de/white-paper    /de/white-paper/  301
+/de/paper          /de/white-paper/  301
+/de/paper/         /de/white-paper/  301
+/de/faq            /de/faq/          301
+/de/FAQ            /de/faq/          301
+/de/FAQ/           /de/faq/          301

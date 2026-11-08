@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Postfork FAQ (Deutsch)</title>
+<meta name="description" content="Kurze Antworten zu Postfork und pBTC (Postfork): Kann ich es heute nutzen (nein), wem man vertrauen müsste, wer erzeugt Blöcke (offen), und was passiert, wenn Bitcoin CTV und CSFS aktiviert." />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0b0c0e" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)" />
+<link rel="canonical" href="https://postfork.org/de/faq/" />
+<link rel="alternate" hreflang="en" href="https://postfork.org/faq/" />
+<link rel="alternate" hreflang="de" href="https://postfork.org/de/faq/" />
+<link rel="alternate" hreflang="x-default" href="https://postfork.org/faq/" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+<link rel="stylesheet" href="/styles.css" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Postfork" />
+<meta property="og:title" content="Postfork FAQ (Deutsch)" />
+<meta property="og:description" content="Kurze Antworten zu Postfork und pBTC (Postfork): Kann ich es heute nutzen (nein), wem man vertrauen müsste, wer erzeugt Blöcke (offen), und was passiert, wenn Bitcoin CTV und CSFS aktiviert." />
+<meta property="og:url" content="https://postfork.org/de/faq/" />
+<meta property="og:locale" content="de_DE" />
+<meta property="og:locale:alternate" content="en_US" />
+<meta property="og:image" content="https://postfork.org/og.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Postfork: Bitcoin Core mit CTV und CSFS ab Genesis. Designspezifikation, vor dem Start." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Postfork FAQ (Deutsch)" />
+<meta name="twitter:description" content="Kurze Antworten zu Postfork und pBTC (Postfork): Kann ich es heute nutzen (nein), wem man vertrauen müsste, wer erzeugt Blöcke (offen), und was passiert, wenn Bitcoin CTV und CSFS aktiviert." />
+<meta name="twitter:image" content="https://postfork.org/og.png" />
+<meta name="twitter:image:alt" content="Postfork: Bitcoin Core mit CTV und CSFS ab Genesis. Designspezifikation, vor dem Start." />
+</head>
+<body>
+<a class="skip" href="#main">Zum Inhalt springen</a>
+<div class="status-strip" role="note"><div class="wrap"><span class="tag">Vor dem Start</span><span>Designspezifikation. Kein Code. Nichts hier Beschriebene ist live. Kann ich es heute nutzen? <strong>Nein.</strong></span></div></div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/de/" aria-label="Postfork"><svg viewBox="2 7 28 19" width="30" height="20" aria-hidden="true" focusable="false"><rect class="logo-base" x="3" y="20" width="5" height="5" rx="1"/><rect class="logo-base" x="10" y="20" width="5" height="5" rx="1"/><path class="logo-link" d="M8 22.5h2"/><path class="logo-ghost" d="M16 22.5h7.5"/><rect class="logo-ghost-box" x="24.6" y="20.6" width="3.8" height="3.8" rx="0.8"/><path class="logo-accent-link" d="M15 20.5L17.5 13"/><rect class="logo-accent" x="17" y="8" width="5" height="5" rx="1"/><path class="logo-accent-link" d="M22 10.5h2"/><rect class="logo-accent" x="24" y="8" width="5" height="5" rx="1"/></svg><span>Postfork</span></a>
+    <nav class="site-nav" aria-label="Hauptnavigation">
+      <a href="/de/#what">Überblick</a><a href="/de/#opcodes">CTV + CSFS</a><a href="/de/#peg">Peg</a><a href="/de/#open">Offene Fragen</a><a href="/de/#status">Status</a><a href="/de/faq/" aria-current="page">FAQ</a><a href="/de/white-paper/">Whitepaper</a>
+    </nav>
+    <div class="langs" role="group" aria-label="Sprache">
+      <a href="/faq/" hreflang="en" lang="en">EN</a>
+      <a href="/de/faq/" hreflang="de" lang="de" aria-current="true">DE</a>
+    </div>
+  </div>
+</header>
+<main id="main">
+<div class="page-head">
+  <div class="wrap">
+    <p class="eyebrow">Designspezifikation · vor dem Start</p>
+    <h1>FAQ</h1>
+    <p class="lede">Kurze Antworten. Das <a href="/de/white-paper/">Whitepaper</a> erklärt mehr; die Spezifikation ist die normative Quelle. Wo eine Antwort vereinfacht, gilt die Spezifikation.</p>
+  </div>
+</div>
+<div class="wrap faq-layout">
+  <nav class="faq-toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">Fragen</h2>
+    <ol>
+      <li><a href="#can-i-use-it-today">Kann ich es heute nutzen?</a></li>
+      <li><a href="#what-is-postfork">Was ist Postfork?</a></li>
+      <li><a href="#why-a-new-chain">Warum eine neue Kette?</a></li>
+      <li><a href="#is-it-a-bitcoin-fork">Ist Postfork ein Fork von Bitcoin? Bekomme ich Coins?</a></li>
+      <li><a href="#what-changes">Was ändert sich gegenüber Bitcoin Core?</a></li>
+      <li><a href="#why-no-internalkey">Warum ist OP_INTERNALKEY nicht dabei?</a></li>
+      <li><a href="#is-this-the-old-pbtc">Ist pBTC (Postfork) das alte pBTC von pTokens?</a></li>
+      <li><a href="#is-it-trustless">In welchem genau definierten Sinn ist es effektiv vertrauensfrei?</a></li>
+      <li><a href="#can-operators-steal">Können Operatoren die Bitcoin stehlen?</a></li>
+      <li><a href="#who-produces-blocks">Wer erzeugt die Blöcke?</a></li>
+      <li><a href="#bitcoin-activates">Was passiert, wenn Bitcoin CTV und CSFS aktiviert?</a></li>
+      <li><a href="#how-peg-in">Wie käme ich zu pBTC?</a></li>
+      <li><a href="#how-redeem">Wie bekäme ich BTC zurück?</a></li>
+      <li><a href="#operator-cost">Was kostet es, Operator zu sein?</a></li>
+      <li><a href="#fees">Gibt es ein Token? Wer bezahlt die Blockproduzenten?</a></li>
+      <li><a href="#gatekeeper">Was ist der Gatekeeper?</a></li>
+      <li><a href="#bugs">Warum keine Admin-Keys? Was passiert bei einem Fehler?</a></li>
+      <li><a href="#privacy">Ist es privat?</a></li>
+      <li><a href="#risks">Was sind die wichtigsten Risiken?</a></li>
+      <li><a href="#where-spec">Wo ist die Spezifikation?</a></li>
+    </ol>
+  </nav>
+  <div class="faq-list">
+    <section class="faq-item" aria-labelledby="can-i-use-it-today">
+      <h2 id="can-i-use-it-today">Kann ich es heute nutzen? <a class="copy-link" href="#can-i-use-it-today" aria-label="Link zu dieser Frage kopieren" data-copied-label="Link kopiert"></a></h2>
+      <p class="short"><strong>Nein.</strong></p>
+<p>Postfork ist eine Designspezifikation vor dem Start. Es gibt keinen Code, keine laufende Kette, kein pBTC (Postfork) und kein Testnetz. Zwei Familien von Launch-Gates müssen beide erfüllt sein: die vier Anforderungsgates (nur wachsende Operator-Menge kodiert, Integrität der Einrichtung, Onboarding vom Inhaber zum Operator, Ökonomie der Anfechter) und die Reifegates G2–G6, darunter die Entscheidung zur Blockproduktion. Alle sind offen; nur G1 (BitVM2 auf Mainnet bewährt) ist erfüllt. Das ist eine Kurzfassung; jedes Abnahmekriterium steht im <a href="/de/#status">Statusteil</a> und in der Spezifikation (§12). Nichts auf dieser Seite beschreibt ein laufendes System.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="what-is-postfork">
+      <h2 id="what-is-postfork">Was ist Postfork? <a class="copy-link" href="#what-is-postfork" aria-label="Link zu dieser Frage kopieren" data-copied-label="Link kopiert"></a></h2>
+      <p>Eine vorgeschlagene neue Blockchain ab Block 0, deren Konsens Bitcoin Core mit BIP-119 (<code>OP_CHECKTEMPLATEVERIFY</code>) und BIP-348 (<code>OP_CHECKSIGFROMSTACK</code>) ist, aktiv ab Genesis, plus eine kleine, ausdrücklich abgegrenzte Peg-Erweiterung. Sie hat kein eigenes Token, keine Blocksubvention und keinen Premine. Ihr einziges Asset ist pBTC (Postfork): Bitcoin, das über eine von <a href="https://github.com/zk-BTC/zkbtc">zkBTC</a> übernommene BitVM2-Reserve eingepeggt wird.</p>
+<p>Der Zweck: das, was CTV und CSFS auf Bitcoin ermöglichen würden, mit echtem Bitcoin statt mit wertlosen Testcoins zu bauen und zu nutzen.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="why-a-new-chain">
+      <h2 id="why-a-new-chain">Warum eine neue Kette? <a class="copy-link" href="#why-a-new-chain" aria-label="Link zu dieser Frage kopieren" data-copied-label="Link kopiert"></a></h2>
+      <p>Keiner der beiden Opcodes ist auf Bitcoin aktiv; beide BIPs haben den Status <code>Draft</code> (<a href="https://github.com/bitcoin/bips/blob/master/bip-0119.mediawiki">BIP-119</a>, <a href="https://github.com/bitcoin/bips/blob/master/bip-0348.md">BIP-348</a>). Heute laufen sie in Regressionstests und auf dem Signet von <a href="https://github.com/bitcoin-inquisition/bitcoin/releases">Bitcoin Inquisition</a>, mit wertlosen Coins. Postfork ist kein Soft-Fork-Vorschlag und bezieht keine Position dazu, ob oder wie Bitcoin etwas aktivieren soll. Es bietet einen eigenen Ort, an dem die Script-Schicht genau die vorgeschlagene ist und das einzige Geld Bitcoin.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="is-it-a-bitcoin-fork">
+      <h2 id="is-it-a-bitcoin-fork">Ist Postfork ein Fork von Bitcoin? Bekomme ich Coins? <a class="copy-link" href="#is-it-a-bitcoin-fork" aria-label="Link zu dieser Frage kopieren" data-copied-label="Link kopiert"></a></h2>
+      <p>Nein und nein. „Post-fork“ meint Bitcoin nach dem Soft Fork CTV + CSFS. Postfork übernimmt nicht die Kettengeschichte von Bitcoin: Es beginnt mit eigener Genesis und leerem UTXO-Set. Kein Snapshot, kein Airdrop. pBTC gibt es nur durch Einpeggen von BTC.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="what-changes">
+      <h2 id="what-changes">Was ändert sich gegenüber Bitcoin Core? <a class="copy-link" href="#what-changes" aria-label="Link zu dieser Frage kopieren" data-copied-label="Link kopiert"></a></h2>
+      <p>Sechzehn aufgelistete Deltas und sonst nichts. Sie fallen in vier Gruppen:</p>
+<ul>
+<li><strong>Identität:</strong> eigene Genesis, Netzwerk-Magic, Ports, Adresspräfix <code>pf</code>; keine fest kodierten Postfork-Block-Checkpoints (der in Genesis festgelegte Bitcoin-Header, der BtcView verankert, ist ein reproduzierbarer Konsensparameter, kein solcher Checkpoint).</li>
+<li><strong>Geld:</strong> Blocksubvention null in jeder Höhe.</li>
+<li><strong>Script:</strong> BIP-119 und BIP-348 ab Genesis aktiv, wie geschrieben. Abweichungen von den BIPs: keine.</li>
+<li><strong>Peg:</strong> Verfolgung der Bitcoin-Header (BtcView), Registrierung von Operator-Epochen, Mint-Regel für den Peg-in und Burn-Regel, transportiert in getaggten <code>OP_RETURN</code>-Outputs ohne Änderung der Transaktions-Serialisierung.</li>
+</ul>
+<p>Die Blockproduktion ist der offene Teil (D-13). Transaktions-Serialisierung, Signatur-Hashes, Taproot und Blockgewicht bleiben wie in Bitcoin Core, ebenso Block- und Header-Serialisierung bis auf die Header-Erweiterung, die der offene Entscheid zur Blockproduktion hinzufügen kann. Auch die gewöhnliche Gebühren-, RBF-, Package- und TRUC-Policy (in pBTC) bleibt unverändert. CTV/CSFS-Standardness und das Relay von Peg-Transaktionen folgen den aufgeführten Policy-Deltas D-06, D-15 und D-16. Siehe die <a href="/de/#principles">Delta-Tabelle</a>.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="why-no-internalkey">
+      <h2 id="why-no-internalkey">Warum ist OP_INTERNALKEY nicht dabei? <a class="copy-link" href="#why-no-internalkey" aria-label="Link zu dieser Frage kopieren" data-copied-label="Link kopiert"></a></h2>
+      <p>Weil der als „CTV + CSFS“ veröffentlichte Vorschlag (<a href="https://ctv-csfs.com/">offener Brief</a>; <a href="https://bitcoinops.org/en/newsletters/2025/07/04/">Bitcoin Optech</a>) genau BIP-119 und BIP-348 enthält und die Referenz-Pull-Requests in Bitcoin Core (<a href="https://github.com/bitcoin/bitcoin/pull/31989">#31989</a>, <a href="https://github.com/bitcoin/bitcoin/pull/32247">#32247</a>) genau diese beiden abdecken. <a href="https://github.com/bitcoin/bips/blob/master/bip-0349.md">BIP-349</a> kommt nur in grösseren Bündeln vor (<a href="https://bitcoinops.org/en/newsletters/2025/12/05/">LNHANCE</a>, <a href="https://github.com/bitcoin/bips/blob/master/bip-0448.md">BIP-448</a>). Er bringt keinen Ausgabepfad, der sich nicht für jeden konkreten Output schreiben liesse, denn ein Script kann den Schlüssel explizit pushen; der Preis sind etwa 8 vBytes und der Verlust der dynamischen Bindung an den internen Schlüssel (keine Wiederverwendung eines Leafs über verschiedene interne Schlüssel, keine automatische Neubindung bei einem Schlüsselwechsel). <code>0xcb</code> bleibt <code>OP_SUCCESS203</code>, ein freier Slot, falls Bitcoin ihn je aktiviert.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="is-this-the-old-pbtc">
+      <h2 id="is-this-the-old-pbtc">Ist pBTC (Postfork) das alte pBTC von pTokens? <a class="copy-link" href="#is-this-the-old-pbtc" aria-label="Link zu dieser Frage kopieren" data-copied-label="Link kopiert"></a></h2>
+      <p class="short"><strong>Nein.</strong> pBTC (Postfork) hat keine Verbindung zu diesem Token, seinen Herausgebern oder seinen Inhabern.</p>
+<p>Es gibt ein nicht verwandtes Token mit dem Ticker pBTC: das Wrapped Bitcoin von pTokens aus dem pNetwork-Projekt. Seine BSC-Variante wurde am 2021-09-19 ausgenutzt; laut <a href="https://medium.com/pnetwork/pnetwork-post-mortem-pbtc-on-bsc-exploit-170890c58d5f">Post-Mortem</a> des Projekts nahm der Angreifer 277 BTC, den Grossteil der Sicherheiten dieser Bridge (Berichterstattung: <a href="https://www.theblock.co/news/defi/2021-09-20-defi-pnetwork-hack-wrapped-bitcoin-12-million-lost-118060">The Block</a>). </p>
+<p>Um Verwechslungen zu vermeiden, schreibt Postfork bei der ersten Nennung „pBTC (Postfork)“, und Wallets müssen es über die Kette (den Postfork-Genesis-Hash) erkennen, nie nur über den Ticker.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="is-it-trustless">
+      <h2 id="is-it-trustless">In welchem genau definierten Sinn ist es effektiv vertrauensfrei? <a class="copy-link" href="#is-it-trustless" aria-label="Link zu dieser Frage kopieren" data-copied-label="Link kopiert"></a></h2>
+      <p class="short"><strong>Effektiv vertrauensfrei, in einem definierten Sinn, und erst, wenn alle Gates erfüllt sind.</strong></p>
+<p>Du vertraust anderen Operatoren deine Bitcoin nicht an. Du bist Operator. Du betreibst deine eigenen Nodes. Konkret: Jeder darf sich für die Operator-Menge registrieren; die aktuellen Mitglieder zertifizieren jede Epoche und können die Aufnahme zensieren; die Menge wächst nur, und nach der Aufnahme wird niemand entfernt; jeder neue Tresor wird von der ganzen aktuellen Menge vorsigniert. Wirst du oder eine Partei, die du für ehrlich hältst, vor der ersten mint-berechtigten Epoche aufgenommen, enthält jeder Tresor, der je einen Mint decken kann, dich, und du signierst keinen Graphen, der jemandem das Stehlen erlaubt. Du betreibst einen Postfork- und einen Bitcoin-Full-Node und kannst, sobald deine Aufnahme geprüft ist, deinen eigenen Ausstieg aus Tresoren bedienen, deren Epochenmenge dich enthält, solange deine Kaution für diese Epoche gebunden und dein Sequenzierungs-Connector gültig ist (ein Betrugs- oder Grief-Slash beendet das, obwohl du in der Menge bleibst). Registriert heisst nicht aufgenommen: Die bisherigen Mitglieder zertifizieren jede Epoche und können Beitretende zensieren; prüfe deshalb auf deinem eigenen Node, dass du in der Menge der ersten mint-berechtigten Epoche bist.</p>
+<p>Es heisst nicht null Annahmen. Operatoren können nur dann nicht stehlen, wenn 1-aus-N-Ehrlichkeit beim Setup gilt, mindestens ein ehrlicher, aktiver Anfechter in jedem Fenster handelt, die Kryptographie von Schaltkreis, Graph und Gültigkeitsbeweis einwandfrei ist, ein Bitcoin-Angreifer unter etwa 50 % der Hashrate bleibt (von Bitcoin geerbt) und die Postfork-seitigen Bedingungen der geltenden Blockproduktionsklasse erfüllt sind: Blockproduzenten nehmen ehrliche Bitcoin-Header auf (sonst kann konsensgültiges, aber ungedecktes pBTC geprägt und sein Burn erstattet werden, Angriff H), und die Kanonizitätsannahme der Klasse gilt (unter BP-O1V eine ehrliche Merge-Mining-Mehrheit), und keine Bitcoin-Reorganisation von 2016 oder mehr Blöcken, die eine abgewickelte Einlage verwaist und damit geprägtes pBTC ungedeckt liesse, während seine Burns erstattet würden; und keine Postfork-Reorganisation verwaist einen bereits erstatteten Burn (sein pBTC käme zurück, während das Tresor-BTC weg ist). Eigener Operator zu sein schützt nicht davor, dass eines davon versagt. Angriff B ist für dich nur geschlossen, wenn du tatsächlich aufgenommen wurdest; bei einer Genesis-Übernahme mit zensierter Aufnahme ist er vollständig offen. Inhaber, die sich nie registrieren, hängen weiter von einem aktiven Operator ab, und zensierende Blockproduzenten können Burns verzögern.</p>
+<p>Die Spezifikation sagt es in einem Satz, hier im englischen Wortlaut:</p>
+<blockquote class="callout verbatim" lang="en"><p>pBTC is safe for you if you (or an operator you trust) were admitted to the operator set of the first mint-eligible epoch, as verified on your own node, and refuse malicious graphs, at least one honest challenger watches both chains and acts in time, the cryptography and the Postfork validity proof are sound, Bitcoin's hashrate majority is honest and no Bitcoin reorganization orphans a settled deposit, Postfork block producers include honest Bitcoin headers, and the block-production class in force is one that §11.2 permits for pBTC and its canonicity assumption holds (under BP-O1V: an honest merge-mining majority) and no Postfork reorganization orphans an already reimbursed burn — and even then, the worst case is a freeze, which is not theft but may never be recoverable.</p></blockquote>
+<p class="small muted">Übersetzung von §9.3 (massgeblich ist der englische Wortlaut): pBTC ist für dich sicher, wenn du (oder ein Operator, dem du vertraust) in die Operator-Menge der ersten mint-berechtigten Epoche aufgenommen wurdest, geprüft auf deinem eigenen Node, und bösartige Graphen verweigerst, mindestens ein ehrlicher Challenger beide Ketten beobachtet und rechtzeitig handelt, die Kryptographie und der Postfork-Gültigkeitsbeweis einwandfrei sind, die Hashrate-Mehrheit von Bitcoin ehrlich ist und keine Bitcoin-Reorganisation eine abgewickelte Einlage verwaist, die Postfork-Blockproduzenten ehrliche Bitcoin-Header aufnehmen und die geltende Blockproduktionsklasse eine ist, die §11.2 für pBTC zulässt, und deren Kanonizitätsannahme gilt (unter BP-O1V: eine ehrliche Merge-Mining-Mehrheit) und keine Postfork-Reorganisation einen bereits erstatteten Burn verwaist — und selbst dann ist der schlimmste Fall ein Einfrieren, das kein Diebstahl ist, aber vielleicht nie behebbar.</p>
+<p class="small muted">§11.2 der Spezifikation listet die zulässigen Blockproduktionsklassen. Heute ist keine Klasse gewählt.</p>
+<p>Ihre prominente Aussage (§11.3), im englischen Wortlaut:</p>
+<blockquote class="callout verbatim" lang="en"><p>pBTC is effectively trustless only in the self-operator sense of §1.1.1, only for the block-production class in force and while its assumptions hold, including that block producers include honest Bitcoin headers, and only after all gates clear. Under the stated assumptions, including that no Bitcoin reorganization orphans a settled deposit, no Postfork reorganization orphans an already reimbursed burn, and no Attack H, F or V succeeds, the worst case is freeze, not theft, and a freeze may be permanent.</p></blockquote>
+<p class="small muted">Übersetzung: pBTC ist effektiv vertrauensfrei nur im Selbst-Operator-Sinn von §1.1.1, nur für die geltende Blockproduktionsklasse und solange deren Annahmen gelten, einschliesslich dessen, dass Blockproduzenten ehrliche Bitcoin-Header aufnehmen, und erst, wenn alle Gates erfüllt sind. Unter den genannten Annahmen, einschliesslich dessen, dass keine Bitcoin-Reorganisation eine abgewickelte Einlage verwaist, keine Postfork-Reorganisation einen bereits erstatteten Burn verwaist und kein Angriff H, F oder V gelingt, ist der schlimmste Fall Einfrieren, nicht Diebstahl, und ein Einfrieren kann dauerhaft sein.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="can-operators-steal">
+      <h2 id="can-operators-steal">Können Operatoren die Bitcoin stehlen? <a class="copy-link" href="#can-operators-steal" aria-label="Link zu dieser Frage kopieren" data-copied-label="Link kopiert"></a></h2>
+      <p>Nicht, solange alle genannten Annahmen gelten: 1-aus-N-Ehrlichkeit beim Setup, mindestens ein ehrlicher, aktiver Anfechter in jedem Fenster, einwandfreie Kryptographie von Schaltkreis, Graph und Gültigkeitsbeweis, ein Bitcoin-Angreifer unter etwa 50 % der Hashrate, Blockproduzenten, die ehrliche Bitcoin-Header aufnehmen (sonst kann konsensgültiges, aber ungedecktes pBTC geprägt und sein Burn aus der Reserve erstattet werden, Angriff H), und die Kanonizitätsannahme der geltenden Blockproduktionsklasse (unter BP-O1V eine ehrliche Merge-Mining-Mehrheit; sonst kann ein Burn auf einer nicht kanonischen Postfork-Gabel erstattet werden, Angriff F), und keine Bitcoin-Reorganisation von 2016 oder mehr Blöcken, die eine abgewickelte Einlage verwaist und damit geprägtes pBTC ungedeckt liesse, während seine Burns erstattet würden; und keine Postfork-Reorganisation verwaist einen bereits erstatteten Burn (sein pBTC käme zurück, während das Tresor-BTC weg ist). Der Tresor hat einen NUMS-internen Schlüssel und keinen lebenden Signierschlüssel; BTC bewegen sich nur entlang des vorsignierten BitVM2-Graphen, und jeder falsche Erstattungsanspruch kann von jedem widerlegt werden.</p>
+<p>Einfrieren ist kein Diebstahl; „kein Diebstahl“ heisst nicht „behebbar“. Nur wenn all diese Annahmen gelten, ist der schlimmste Fall, dass Tresore oder verbrannte Coins einfrieren. Niemand gewinnt sie, aber es gibt keinen Rat, keinen Admin-Schlüssel und keinen Rettungspfad, also kann ein Einfrieren dauerhaft sein. Ein Soundness-Fehler im Graphen, in der Erstattungsaussage oder im Gültigkeitsbeweis kann Diebstahl ermöglichen, ebenso ein Konsensfehler, den Nodes und die Spezifikation des Gültigkeitsbeweises teilen.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="who-produces-blocks">
+      <h2 id="who-produces-blocks">Wer erzeugt die Blöcke? <a class="copy-link" href="#who-produces-blocks" aria-label="Link zu dieser Frage kopieren" data-copied-label="Link kopiert"></a></h2>
+      <p class="short"><strong>Nicht entschieden.</strong> Die Blockproduktion ist eine offene Entscheidung (Gate G5).</p>
+<p>Die Optionen sind Merge Mining (O1), ein eigener SHA-256-Proof-of-Work (O2), ein föderiertes Signier-Quorum (O3) und Mischformen: O1 mit weichen Vorbestätigungen (H1), O3 mit Gültigkeitsbeweis (H2) und an Bitcoin verankerte Fork Choice (H3). Die Wahl ist für den Peg wichtig: Der BitVM2-Verifizierer muss feststellen, dass ein Burn auf der kanonischen Postfork-Kette liegt, und wie belastbar das ist, hängt von der Regel ab. Auch für Mints ist sie wichtig: Produzenten, die ehrliche Bitcoin-Header aus Postfork-Blöcken heraushalten, können zusammen mit einem privaten Bitcoin-Zweig von mindestens 2016 Blöcken Tiefe mit mindestens der festen Mindestarbeit <code>W_mint</code> (2016 Blöcke in der Difficulty des Checkpoints; die Timewarp-Schwäche von Bitcoin liesse einen solchen Zweig diese Tiefe mit weniger Arbeit erreichen, deshalb gibt es die Arbeitsuntergrenze, und ist die Bitcoin-Difficulty über die des Checkpoints gestiegen, entspricht die feste Untergrenze weniger als 2016 aktuellen Blöcken; ein solcher Zweig kann viele Mints tragen) einen Mint gegen einen nicht kanonischen Bitcoin-Zweig gültig machen (Angriff H). Dafür braucht es keine Bitcoin-Mehrheit, nur einen Miner, der diese Arbeit aufwendet; die Mint-Kanonizität hängt also ebenfalls von der Blockproduktion ab.</p>
+<p>Die unverbindliche Empfehlung der Spezifikation ist H3 für die Fork Choice, damit die Burn-Kanonizität auf Bitcoin zurückgeht, mit Merge Mining als Standardweg für Blockvorschläge und dem Postfork-Gültigkeitsbeweis in jedem Fall. Sie lehnt O2 für einen Peg mit echtem Geld und O3 als Sicherheitsquelle ab. Merge Mining allein erbt nicht die Sicherheit von Bitcoin (<a href="https://eprint.iacr.org/2017/791">ePrint 2017/791</a>). Blockproduzenten verdienen nur pBTC-Gebühren; es gibt keine Subvention.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="bitcoin-activates">
+      <h2 id="bitcoin-activates">Was passiert, wenn Bitcoin CTV und CSFS aktiviert? <a class="copy-link" href="#bitcoin-activates" aria-label="Link zu dieser Frage kopieren" data-copied-label="Link kopiert"></a></h2>
+      <p>Postfork folgt Bitcoin nicht automatisch, und keine Edition darf die Bedeutung eines Opcodes in bestehenden Scripts ändern. Die Spezifikation regelt jeden Fall:</p>
+<ul>
+<li><strong>Bitcoin aktiviert BIP-119 und BIP-348 mit identischer Semantik:</strong> Postfork ist konvergiert, sein Konsens bleibt unverändert. Die Replay-Gefahr neu bindbarer Signaturen über Ketten hinweg wird real, und Wallets müssen warnen. CTV und CSFS können höchstens Teile des vorsignierten Graphen des Pegs durch Templates ersetzen, als neue Tresorgeneration unter adversarialem Review. Sie können keinen Postfork-Burn-Beweis im Script prüfen; die Abhängigkeit von einem aktiven Operator für Ausstiege bleibt. Ein Ausstieg, den jeder erfüllen kann, bräuchte mehr Fähigkeiten, etwa Introspektion der <code>OP_CAT</code>-Klasse.</li>
+<li><strong>Gleiche Opcodes, andere Revisionen:</strong> Postfork behält die gepinnte Semantik.</li>
+<li><strong>Ein anderes Bündel, etwa BIP-448:</strong> Postfork darf diese Opcodes in ihren Bitcoin-Slots ergänzen, die es freigehalten hat, aber nur als neue Kette oder sobald bestehende Tresore kein umlaufendes pBTC mehr decken, und entfernt CTV nie. Es ist dann eine Obermenge.</li>
+<li><strong>Nur CTV:</strong> CSFS bleibt eine Postfork-Erweiterung.</li>
+<li><strong>Nichts:</strong> Die Prämisse bleibt hypothetisch und wird so beschrieben.</li>
+</ul>
+<p>Bestehende Tresore werden nie an Ort und Stelle geändert. Inhaber wechseln, indem sie verbrennen und neu einpeggen. Jede Änderung an den Regeln, die der Verifizierer der Reserve prüft, auch ein verschärfender Soft Fork, eine lockernde Änderung oder eine Änderung von Header-Format, Fork Choice oder Blockproduktion, wird als Hard-Fork-Edition behandelt: Bestehende Tresore prüfen Burns nur gegen die Regeln, für die ihre Graphen signiert wurden, und ihr Verifizierer akzeptiert auch Blöcke, die verschärfte Regeln ablehnen würden. Eine solche Edition muss deshalb eine neue Kette mit Migration durch Burn und erneutes Einpeggen sein, oder sie darf nicht übernommen werden, solange bestehende Tresore umlaufendes pBTC decken.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="how-peg-in">
+      <h2 id="how-peg-in">Wie käme ich zu pBTC? <a class="copy-link" href="#how-peg-in" aria-label="Link zu dieser Frage kopieren" data-copied-label="Link kopiert"></a></h2>
+      <p>Durch Einpeggen, sobald alles live ist. Du zahlst genau eine Stückelung (0,1, 1 oder 10 BTC; provisorisch) plus die feste <code>MoveToBacked</code>-Gebühr <code>MTB_FEE</code> plus den Gesamtwert der festen Anker-Outputs (beide in Genesis festgelegt; die Gebühr geht an Bitcoin-Miner, die Anker-Outputs sind eigene Outputs von <code>MoveToBacked</code>, mit denen sich die Gebühr erhöhen lässt) an ein Deposit-Taproot; jeder andere Betrag kann nicht prägen. Die Operator-Menge vorsigniert den BitVM2-Graphen, darunter eine Transaktion namens <code>MoveToBacked</code>, die die Einlage in einen Tresor bewegt und dein Postfork-Claim-Script festlegt; du signierst als Letzter mit, sendest <code>MoveToBacked</code> sofort, erhöhst die Gebühr bei Bedarf über seine Anker (CPFP) und versuchst keine Rückerstattung, solange es noch bestätigt werden kann: Script setzt ihm keine Frist, also konkurrieren nach Ablauf der Rückerstattungsfrist Rückerstattung und <code>MoveToBacked</code>, und wer zuerst bestätigt wird, gewinnt. Liegt <code>MoveToBacked</code> mindestens 2016 Bitcoin-Blöcke tief und ist von seinem Block bis zur Spitze mindestens die in Genesis festgelegte Mindestarbeit <code>W_mint</code> (2016 Blöcke in der Difficulty des Checkpoints) erreicht, normalerweise nach etwa zwei Wochen und länger, wenn die Bitcoin-Difficulty unter der des Checkpoints liegt, reichst du eine Mint-Transaktion ein. Jeder Postfork-Full-Node prüft den Beweis gegen die Bitcoin-Header, die er verfolgt, und pBTC erscheinen in den Outputs der Mint-Transaktion, die dein Claim-Script autorisiert.</p>
+<p>Der Beitritt zur Operator-Menge vor der ersten mint-berechtigten Epoche ist optional und empfohlen: Sobald deine Aufnahme auf deinem eigenen Node geprüft ist, bist du der einzige Operator, dem du vertrauen musst. Die oben genannten Bedingungen an die Blockproduktion bleiben.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="how-redeem">
+      <h2 id="how-redeem">Wie bekäme ich BTC zurück? <a class="copy-link" href="#how-redeem" aria-label="Link zu dieser Frage kopieren" data-copied-label="Link kopiert"></a></h2>
+      <p>Zuerst verbrennen. Du veröffentlichst einen Burn über einen Betrag, der zu einem verfügbaren Tresor passt, mit einem Bitcoin-Schlüssel, den deine Wallet kontrolliert (ein formal gültiger Schlüssel, den niemand besitzt, verliert die Auszahlung), und einer Höchstgebühr. Ein aufgenommener Operator, dessen Identität in der Epochenmenge eines passenden Tresors ist, dessen Kaution für diese Epoche gebunden und dessen Sequenzierungs-Connector gültig ist, zahlt dir auf Bitcoin aus eigenen Mitteln aus und beansprucht danach über seinen Connector die Erstattung aus diesem Tresor. Das kannst du selbst sein, unter denselben Bedingungen; die geprüfte Aufnahme allein genügt nicht, und ein Slash oder die Rückgabe deiner Kaution für diese Epoche beendet die Fähigkeit. Jeder darf einen falschen Anspruch im Anfechtungsfenster widerlegen. Kein Gatekeeper ist beteiligt.</p>
+<p>Der Burn ist final, bevor ein Operator handelt. Bedient ihn niemand, etwa weil die Höchstgebühr zu niedrig war, bleibt der Coin ohne Auszahlung verbrannt, bis es jemand tut. Es gibt kein Zurück.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="operator-cost">
+      <h2 id="operator-cost">Was kostet es, Operator zu sein? <a class="copy-link" href="#operator-cost" aria-label="Link zu dieser Frage kopieren" data-copied-label="Link kopiert"></a></h2>
+      <p>Eine Kaution auf Bitcoin (Klasse 2 BTC; provisorisch), gesperrt, bis kein Tresor dieser Epoche mehr einen offenen Anspruchspfad hat, dazu die Teilnahme an der Vorsignier-Zeremonie und Gebühren. Operatoren strecken Peg-outs aus eigenen BTC vor und werden nach dem Anfechtungsfenster erstattet. Das ist eine Verpflichtung mit Kaution, kein Klick. Ein betrügerischer Anspruch, der widerlegt wird, kostet die Kaution und bringt dem Anfechter eine Prämie auf Bitcoin.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="fees">
+      <h2 id="fees">Gibt es ein Token? Wer bezahlt die Blockproduzenten? <a class="copy-link" href="#fees" aria-label="Link zu dieser Frage kopieren" data-copied-label="Link kopiert"></a></h2>
+      <p>Es gibt kein Token. Gebühren werden in pBTC bezahlt, und Blockproduzenten verdienen nur Gebühren. Vor dem ersten Mint gibt es kein pBTC und damit keine Gebühren; der erste Mint bezahlt seine Gebühr aus dem geprägten Betrag. Ein Sicherheitsbudget nur aus Gebühren ist ein genanntes Restrisiko, kein Merkmal.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="gatekeeper">
+      <h2 id="gatekeeper">Was ist der Gatekeeper? <a class="copy-link" href="#gatekeeper" aria-label="Link zu dieser Frage kopieren" data-copied-label="Link kopiert"></a></h2>
+      <p>Ein optionaler, im Genesis-Block gepinnter Schlüssel, der nur neue Mints verweigern kann, etwa zur Prüfung der Mittelherkunft. Standard ist: keiner. Er kann keine Coins einfrieren oder zurückholen, hat keine Befugnis, sie umzuleiten, und hat keine Rolle bei Transfers, Burns, Auszahlungen oder Anfechtungen. Einen Mint mit teilweisem Sighash (<code>SIGHASH_NONE</code> oder losem <code>SIGHASH_SINGLE</code>) kann jeder umleiten, der ihn sieht, auch der Gatekeeper; Wallets müssen Mints mit <code>SIGHASH_ALL</code>, dem Standard-Sighash von Taproot oder einem per CSFS signierten CTV-Hash signieren. Falls gesetzt, zensiert er alle neuen Peg-ins der Kette. Verweigert er seine Signatur, nachdem <code>MoveToBacked</code> bestätigt ist, findet kein Mint statt und die eingelagerten BTC werden zu einem unwiderruflichen Reservebeitrag: ein echter Verlustpfad für diesen Einleger. Er ist nie das, was pBTC sicher macht.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="bugs">
+      <h2 id="bugs">Warum keine Admin-Keys? Was passiert bei einem Fehler? <a class="copy-link" href="#bugs" aria-label="Link zu dieser Frage kopieren" data-copied-label="Link kopiert"></a></h2>
+      <p>Jeder Admin-Key, jeder Rat und jeder Notfall-Key wäre eine Vertrauenswurzel, die nicht du bist. Darum gibt es keinen, in keiner Edition. Der Preis ist Unumkehrbarkeit: Ein Fehler, der die Soundness nicht betrifft, kann betroffene Tresore dauerhaft einfrieren; ein Soundness-Fehler kann Diebstahl ermöglichen; niemand kann Mittel in Sicherheit bringen. Upgrades sind neue Editionen, die Nutzer selbst wählen, und Tresore wechseln nur über Burn und erneutes Einpeggen. Deshalb verlangen die Launch-Gates eine unabhängige Neuimplementierung der Peg-Regeln, Differenztests und Konformität, bevor etwas ausgeliefert wird.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="privacy">
+      <h2 id="privacy">Ist es privat? <a class="copy-link" href="#privacy" aria-label="Link zu dieser Frage kopieren" data-copied-label="Link kopiert"></a></h2>
+      <p>Nein. Postfork ist so transparent wie Bitcoin und beansprucht keine Privatsphäre. Peg-ins, Transfers, Burns, Auszahlungen und Operator-Registrierungen sind öffentlich, und der Peg verbindet eine Einlage auf Bitcoin mit ihrem Empfänger auf Postfork und einen Burn mit seiner Auszahlung. Verwende frische Schlüssel pro Einlage, Claim-Script und Empfänger.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="risks">
+      <h2 id="risks">Was sind die wichtigsten Risiken? <a class="copy-link" href="#risks" aria-label="Link zu dieser Frage kopieren" data-copied-label="Link kopiert"></a></h2>
+      <p>Neben den Annahmen oben: Der Postfork-Gültigkeitsbeweis ist nicht mainnet-erprobt (Gate G4); die Burn-Kanonizität ist nur so stark wie die Blockproduktionsklasse (Angriff F); die Mint-Kanonizität setzt voraus, dass Blockproduzenten ehrliche Bitcoin-Header nicht zensieren (Angriff H); eine Bitcoin-Reorganisation von 2016 oder mehr Blöcken, die eine abgewickelte Einlage verwaist, würde geprägte pBTC ungedeckt lassen; eine Postfork-Reorganisation, die einen bereits erstatteten Burn verwaist, brächte sein pBTC zurück, während das Tresor-BTC weg ist; Wallet-Fehler wie BTC auf Bitcoin an ein Postfork-Covenant-Script zu senden kosten Geld; und Bitcoin kann einen anderen Covenant-Satz oder gar nichts aktivieren. Die Spezifikation listet zweiundzwanzig Restannahmen und nennt keine davon gelöst.</p>
+    </section>
+    <section class="faq-item" aria-labelledby="where-spec">
+      <h2 id="where-spec">Wo ist die Spezifikation? <a class="copy-link" href="#where-spec" aria-label="Link zu dieser Frage kopieren" data-copied-label="Link kopiert"></a></h2>
+      <p>Die Spezifikation (Edition spec-v1.0, Entwurf) ist das einzige normative Dokument des Projekts. Ihre Veröffentlichung in einem öffentlichen Repository unter <a href="https://github.com/postfork">github.com/postfork</a> ist geplant. Das <a href="/de/white-paper/">Whitepaper</a>, diese FAQ und die Website sind informativ; wo sie vereinfachen, gilt die Spezifikation. Ein vertraulicher Kanal für Sicherheitsmeldungen ist noch nicht offen: Die private Schwachstellenmeldung von GitHub ist im Repository dieser Website nicht aktiviert, und es ist keine E-Mail-Adresse veröffentlicht. Eröffne für eine ungepatchte Schwachstelle im Design kein öffentliches Issue; behalte die Meldung, bis in dieser Antwort und in der <code>SECURITY.md</code> des Website-Repositorys ein vertraulicher Kanal angekündigt ist.</p>
+    </section>
+  </div>
+</div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <a class="brand" href="/de/"><svg viewBox="2 7 28 19" width="30" height="20" aria-hidden="true" focusable="false"><rect class="logo-base" x="3" y="20" width="5" height="5" rx="1"/><rect class="logo-base" x="10" y="20" width="5" height="5" rx="1"/><path class="logo-link" d="M8 22.5h2"/><path class="logo-ghost" d="M16 22.5h7.5"/><rect class="logo-ghost-box" x="24.6" y="20.6" width="3.8" height="3.8" rx="0.8"/><path class="logo-accent-link" d="M15 20.5L17.5 13"/><rect class="logo-accent" x="17" y="8" width="5" height="5" rx="1"/><path class="logo-accent-link" d="M22 10.5h2"/><rect class="logo-accent" x="24" y="8" width="5" height="5" rx="1"/></svg><span>Postfork</span></a>
+        <p class="small">Bitcoin Core mit BIP-119 und BIP-348, aktiv ab Genesis, und pBTC (Postfork), ein durch BitVM2 gedeckter Bitcoin-Peg. Designspezifikation vor dem Start. Nichts ist live.</p>
+        <p class="small">Nur informativ. Wo diese Seite vereinfacht, gilt die Spezifikation.</p>
+      </div>
+      <div>
+        <h2>Projekt</h2>
+        <ul>
+          <li><a href="/de/white-paper/">Whitepaper (DE, PDF)</a></li>
+          <li><a href="/white-paper/" hreflang="en">Whitepaper (EN, PDF)</a></li>
+          <li><a href="/de/faq/">FAQ</a></li>
+          <li><a href="/de/#status">Status und Launch-Gates</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Anderswo</h2>
+        <ul>
+          <li><a href="https://github.com/postfork">GitHub: postfork</a></li>
+          <li>X: @postfork <span class="muted">(geplant; noch nicht gesichert, daher nicht verlinkt)</span></li>
+          <li><a href="https://github.com/zk-BTC/zkbtc">zkBTC, Basis des Peg-Designs</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="fine">Die Spezifikation (Edition spec-v1.0, Entwurf) ist das einzige normative Dokument; ihre Veröffentlichung unter der GitHub-Organisation postfork ist geplant. Inhalte der Seite unter der MIT-Lizenz. Postfork hat keine Verbindung zum Token von pTokens/pNetwork, das ebenfalls pBTC heisst.</p>
+  </div>
+</footer>
+<script src="/site.js" defer></script>
+</body>
+</html>

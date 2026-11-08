@@ -1,0 +1,16 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'self'
+
+/files/*
+  ! Content-Security-Policy
+  Cache-Control: public, max-age=3600
+
+/white-paper/*
+  ! Content-Security-Policy
+
+/de/white-paper/*
+  ! Content-Security-Policy
