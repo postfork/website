@@ -109,7 +109,7 @@
     <div class="section-head">
       <p class="kicker">What Postfork is</p>
       <h2 id="what-title">One chain, one reserve, one asset</h2>
-      <p>Postfork has two halves. The chain: Bitcoin Core consensus with BIP-119 and BIP-348 active from genesis, zero subsidy, and a small, explicitly delimited peg extension. The reserve: a BitVM2 construction on Bitcoin, adapted from zkBTC, that holds the BTC behind every pBTC.</p>
+      <p>Postfork has two halves. The chain: Bitcoin Core consensus with BIP-119 and BIP-348 active from genesis, zero subsidy, and a small, explicitly delimited peg extension. The reserve: a BitVM2 construction on Bitcoin, adapted from zkBTC, that holds the vault BTC intended to back pBTC, subject to the stated assumptions.</p>
     </div>
     <blockquote class="principle">
       <p>Bitcoin as it will look if CTV and CSFS activate — designed to be usable with pegged bitcoin once all launch gates clear, with no new asset, and with a peg in which the only operator you need to trust can be you.</p>
@@ -243,7 +243,7 @@
           <li><strong>Join (optional, recommended)</strong>Register for the operator set before the first mint-eligible epoch, and verify on your own node that you were admitted.</li>
           <li><strong>Deposit</strong>Pay one denomination (0.1, 1 or 10 BTC) to a deposit taproot. Fix your Postfork claim script first.</li>
           <li><strong>Presign and vault</strong>All operators of the epoch pre-sign the deposit’s BitVM2 graph, including <code>MoveToBacked</code>, which commits your claim script; you co-sign. The vault has a NUMS internal key: no key-path spend, no live signing key.</li>
-          <li><strong>Finality</strong>Wait until <code>MoveToBacked</code> is 2016 Bitcoin blocks deep in BtcView, the Bitcoin header chain that Postfork consensus tracks. About two weeks.</li>
+          <li><strong>Finality</strong>Wait until <code>MoveToBacked</code> is 2016 Bitcoin blocks deep in BtcView, with at least the genesis-pinned minimum chainwork on top of it, the Bitcoin header chain that Postfork consensus tracks. About two weeks.</li>
           <li><strong>Mint</strong>Submit the mint transaction. Every Postfork full node checks the proof (clauses M1–M11). pBTC appear at your claim script, minus the fee.</li>
         </ol>
         <p class="small muted">If operators never fire <code>MoveToBacked</code>, the depositor refunds after a timelock. Once <code>MoveToBacked</code> fires without a later mint, the BTC is an irrevocable, consented contribution to the reserve.</p>
@@ -296,7 +296,7 @@
           <table>
             <thead><tr><th scope="col">Action</th><th scope="col">Why it fails</th></tr></thead>
             <tbody>
-              <tr><th scope="row">Mint pBTC without a vault deposit</th><td>A mint needs a proven <code>MoveToBacked</code> at depth ≥ 2016 on BtcView; full nodes reject anything else. BtcView is canonical Bitcoin only under the stated assumptions: header censorship by block producers plus a private 2016-block Bitcoin branch (Attack H), or a deeper Bitcoin reorganization, can make a consensus-valid mint unbacked. Against the BitVM2 verifier this also needs the Postfork validity proof (gate G4, Attack V).</td></tr>
+              <tr><th scope="row">Mint pBTC without a vault deposit</th><td>A mint needs a proven <code>MoveToBacked</code> at depth ≥ 2016 on BtcView; full nodes reject anything else. BtcView is canonical Bitcoin only under the stated assumptions: header censorship by block producers plus a private 2016-block Bitcoin branch with the genesis-pinned minimum chainwork (Attack H; under Bitcoin’s timewarp weakness less than 2016 blocks of current work), or a deeper Bitcoin reorganization, can make a consensus-valid mint unbacked. Against the BitVM2 verifier this also needs the Postfork validity proof (gate G4, Attack V).</td></tr>
               <tr><th scope="row">Mint twice from one deposit</th><td>Each vault outpoint can be consumed once (clause M8).</td></tr>
               <tr><th scope="row">Redirect a mint</th><td>The claim script is committed in the pre-signed, depositor-co-signed <code>MoveToBacked</code>.</td></tr>
               <tr><th scope="row">Freeze, blacklist or claw back pBTC</th><td>No such rule exists.</td></tr>
@@ -318,7 +318,7 @@
             <thead><tr><th scope="col">Attack</th><th scope="col">What it is</th><th scope="col">Closed by</th><th scope="col">Residual</th></tr></thead>
             <tbody>
               <tr><th scope="row">A</th><td>Mint against a <code>MoveToBacked</code> on a private Bitcoin fork</td><td>Most-work header tracking in consensus + 2016-block depth</td><td>Bitcoin-class (majority hashrate)</td></tr>
-              <tr><th scope="row">H</th><td>Producers withhold honest Bitcoin headers</td><td>Any honest relayer; node safety mode</td><td>Needs producer collusion and 2016 Bitcoin-difficulty blocks, but no Bitcoin majority: mint canonicity depends on block production</td></tr>
+              <tr><th scope="row">H</th><td>Producers withhold honest Bitcoin headers</td><td>Any honest relayer; node safety mode</td><td>Needs producer collusion and a private Bitcoin branch of 2016 blocks carrying at least the genesis-pinned minimum chainwork (2016 blocks at the checkpoint’s difficulty; because of Bitcoin’s timewarp weakness this can be less than 2016 blocks of current work), but no Bitcoin majority: mint canonicity depends on block production</td></tr>
               <tr><th scope="row">B</th><td>A Sybil epoch drains its own vault, redeems against honest vaults</td><td>Growth-only operator set + registration-only first epochs, for an admitted operator</td><td>Prefix for late joiners; open for anyone a genesis captor kept out</td></tr>
               <tr><th scope="row">F</th><td>Burn on a private Postfork fork, get reimbursed on Bitcoin</td><td>Postfork canonicity check in the reimbursement statement + burn depth</td><td>Class of the block-production option</td></tr>
               <tr><th scope="row">V</th><td>Mint from an invalid Postfork state, then burn</td><td>Postfork validity proof (gate G4, not mainnet-proven)</td><td>Shared consensus or specification bug: theft possible</td></tr>
@@ -418,7 +418,7 @@
     <div class="section-head">
       <p class="kicker">Open questions</p>
       <h2 id="open-title">Who produces blocks? Not decided</h2>
-      <p>How Postfork blocks are produced is an open decision (gate G5). No option is adopted. It matters because the peg can be no stronger than what its verifier can establish about Postfork, and whether a burn is canonical depends on the block-production rule. Mints depend on it too: producers who censor honest Bitcoin headers can, with 2016 Bitcoin-difficulty blocks from a minority miner, make a mint against a non-canonical Bitcoin branch valid (Attack H).</p>
+      <p>How Postfork blocks are produced is an open decision (gate G5). No option is adopted. It matters because the peg can be no stronger than what its verifier can establish about Postfork, and whether a burn is canonical depends on the block-production rule. Mints depend on it too: producers who censor honest Bitcoin headers can, with a private Bitcoin branch of 2016 blocks carrying at least the genesis-pinned minimum chainwork (2016 blocks at the checkpoint’s difficulty; because of Bitcoin’s timewarp weakness this can be less than 2016 blocks of current work) from a minority miner, make a mint against a non-canonical Bitcoin branch valid (Attack H).</p>
     </div>
     <div class="table-wrap">
       <table>

@@ -109,7 +109,7 @@
     <div class="section-head">
       <p class="kicker">Was Postfork ist</p>
       <h2 id="what-title">Eine Kette, eine Reserve, ein Asset</h2>
-      <p>Postfork hat zwei Hälften. Die Kette: Bitcoin-Core-Konsens mit BIP-119 und BIP-348, aktiv ab Genesis, Subvention null und eine kleine, ausdrücklich abgegrenzte Peg-Erweiterung. Die Reserve: eine BitVM2-Konstruktion auf Bitcoin, übernommen von zkBTC, die die BTC hinter jedem pBTC hält.</p>
+      <p>Postfork hat zwei Hälften. Die Kette: Bitcoin-Core-Konsens mit BIP-119 und BIP-348, aktiv ab Genesis, Subvention null und eine kleine, ausdrücklich abgegrenzte Peg-Erweiterung. Die Reserve: eine BitVM2-Konstruktion auf Bitcoin, übernommen von zkBTC, die die zur Deckung vorgesehenen Tresor-BTC hält, vorbehaltlich der genannten Annahmen.</p>
     </div>
     <blockquote class="principle">
       <p>Bitcoin, wie es aussehen wird, falls CTV und CSFS aktiviert werden — dafür entworfen, mit eingepeggtem Bitcoin nutzbar zu sein, sobald alle Launch-Gates erfüllt sind, ohne neues Asset und mit einem Peg, in dem der einzige Operator, dem du vertrauen musst, du selbst sein kannst.</p>
@@ -243,7 +243,7 @@
           <li><strong>Beitreten (optional, empfohlen)</strong>Vor der ersten mint-berechtigten Epoche für die Operator-Menge registrieren und auf dem eigenen Node prüfen, dass du aufgenommen wurdest.</li>
           <li><strong>Einzahlen</strong>Eine Stückelung (0,1, 1 oder 10 BTC) an ein Deposit-Taproot zahlen. Vorher das Postfork-Claim-Script festlegen.</li>
           <li><strong>Vorsignieren und Tresor</strong>Alle Operatoren der Epoche vorsignieren den BitVM2-Graphen der Einlage samt <code>MoveToBacked</code>, das dein Claim-Script festlegt; du signierst mit. Der Tresor hat einen NUMS-internen Schlüssel: kein Key-Path, kein lebender Signierschlüssel.</li>
-          <li><strong>Finalität</strong>Warten, bis <code>MoveToBacked</code> 2016 Bitcoin-Blöcke tief in BtcView liegt, der Bitcoin-Headerkette, die der Postfork-Konsens verfolgt. Etwa zwei Wochen.</li>
+          <li><strong>Finalität</strong>Warten, bis <code>MoveToBacked</code> 2016 Bitcoin-Blöcke tief in BtcView liegt, mit mindestens der in Genesis festgelegten Mindestarbeit darüber, der Bitcoin-Headerkette, die der Postfork-Konsens verfolgt. Etwa zwei Wochen.</li>
           <li><strong>Mint</strong>Die Mint-Transaktion einreichen. Jeder Postfork-Full-Node prüft den Beweis (Klauseln M1–M11). pBTC erscheinen an deinem Claim-Script, abzüglich der Gebühr.</li>
         </ol>
         <p class="small muted">Feuern die Operatoren <code>MoveToBacked</code> nie, erhält der Einzahler sein Geld nach einem Timelock zurück. Feuert <code>MoveToBacked</code> ohne späteren Mint, sind die BTC ein unwiderruflicher, zugestimmter Beitrag zur Reserve.</p>
@@ -298,7 +298,7 @@
           <table>
             <thead><tr><th scope="col">Handlung</th><th scope="col">Warum sie scheitert</th></tr></thead>
             <tbody>
-              <tr><th scope="row">pBTC ohne Tresoreinlage prägen</th><td>Ein Mint braucht ein bewiesenes <code>MoveToBacked</code> in Tiefe ≥ 2016 in BtcView; Full Nodes lehnen alles andere ab. BtcView ist nur unter den genannten Annahmen kanonisches Bitcoin: Header-Zensur durch Blockproduzenten plus ein privater Bitcoin-Zweig von 2016 Blöcken (Angriff H) oder eine tiefere Bitcoin-Reorganisation können einen konsensgültigen Mint ungedeckt machen. Gegenüber dem BitVM2-Verifizierer braucht es zusätzlich den Postfork-Gültigkeitsbeweis (Gate G4, Angriff V).</td></tr>
+              <tr><th scope="row">pBTC ohne Tresoreinlage prägen</th><td>Ein Mint braucht ein bewiesenes <code>MoveToBacked</code> in Tiefe ≥ 2016 in BtcView; Full Nodes lehnen alles andere ab. BtcView ist nur unter den genannten Annahmen kanonisches Bitcoin: Header-Zensur durch Blockproduzenten plus ein privater Bitcoin-Zweig von 2016 Blöcken mit der in Genesis festgelegten Mindestarbeit (Angriff H; wegen der Timewarp-Schwäche von Bitcoin weniger als 2016 Blöcke aktueller Arbeit) oder eine tiefere Bitcoin-Reorganisation können einen konsensgültigen Mint ungedeckt machen. Gegenüber dem BitVM2-Verifizierer braucht es zusätzlich den Postfork-Gültigkeitsbeweis (Gate G4, Angriff V).</td></tr>
               <tr><th scope="row">Aus einer Einlage zweimal prägen</th><td>Jeder Tresor-Outpoint kann nur einmal verbraucht werden (Klausel M8).</td></tr>
               <tr><th scope="row">Einen Mint umleiten</th><td>Das Claim-Script ist im vorsignierten, vom Einzahler mitsignierten <code>MoveToBacked</code> festgelegt.</td></tr>
               <tr><th scope="row">pBTC einfrieren, sperren oder zurückholen</th><td>Eine solche Regel gibt es nicht.</td></tr>
@@ -320,7 +320,7 @@
             <thead><tr><th scope="col">Angriff</th><th scope="col">Was er ist</th><th scope="col">Geschlossen durch</th><th scope="col">Restrisiko</th></tr></thead>
             <tbody>
               <tr><th scope="row">A</th><td>Mint gegen ein <code>MoveToBacked</code> auf einer privaten Bitcoin-Gabel</td><td>Header-Verfolgung nach der meisten Arbeit im Konsens + Tiefe 2016</td><td>Bitcoin-Klasse (Hashrate-Mehrheit)</td></tr>
-              <tr><th scope="row">H</th><td>Produzenten halten ehrliche Bitcoin-Header zurück</td><td>Jeder ehrliche Relayer; Node-Sicherheitsmodus</td><td>Braucht Absprache der Produzenten und 2016 Blöcke in Bitcoin-Difficulty, aber keine Bitcoin-Mehrheit: Die Mint-Kanonizität hängt von der Blockproduktion ab</td></tr>
+              <tr><th scope="row">H</th><td>Produzenten halten ehrliche Bitcoin-Header zurück</td><td>Jeder ehrliche Relayer; Node-Sicherheitsmodus</td><td>Braucht Absprache der Produzenten und einen privaten Bitcoin-Zweig von 2016 Blöcken mit mindestens der in Genesis festgelegten Mindestarbeit (2016 Blöcke in der Difficulty des Checkpoints; wegen der Timewarp-Schwäche von Bitcoin kann das weniger als 2016 Blöcke aktueller Arbeit sein), aber keine Bitcoin-Mehrheit: Die Mint-Kanonizität hängt von der Blockproduktion ab</td></tr>
               <tr><th scope="row">B</th><td>Eine Sybil-Epoche leert ihren eigenen Tresor und löst gegen ehrliche Tresore ein</td><td>Nur wachsende Operator-Menge + reine Registrierungsepochen am Anfang, für einen aufgenommenen Operator</td><td>Präfix für späte Beitretende; offen für alle, die ein Genesis-Eroberer ausschliesst</td></tr>
               <tr><th scope="row">F</th><td>Burn auf einer privaten Postfork-Gabel, Erstattung auf Bitcoin</td><td>Postfork-Kanonizitätsprüfung in der Erstattungsaussage + Burn-Tiefe</td><td>Klasse der Blockproduktion</td></tr>
               <tr><th scope="row">V</th><td>Mint aus einem ungültigen Postfork-Zustand, dann Burn</td><td>Postfork-Gültigkeitsbeweis (Gate G4, nicht mainnet-erprobt)</td><td>Geteilter Konsens- oder Spezifikationsfehler: Diebstahl möglich</td></tr>
@@ -420,7 +420,7 @@
     <div class="section-head">
       <p class="kicker">Offene Fragen</p>
       <h2 id="open-title">Wer erzeugt die Blöcke? Nicht entschieden</h2>
-      <p>Wie Postfork-Blöcke erzeugt werden, ist eine offene Entscheidung (Gate G5). Keine Option ist gewählt. Das ist wichtig, weil der Peg nicht stärker sein kann als das, was sein Verifizierer über Postfork feststellen kann, und ob ein Burn kanonisch ist, hängt von der Regel der Blockproduktion ab. Auch Mints hängen davon ab: Produzenten, die ehrliche Bitcoin-Header zensieren, können zusammen mit 2016 Blöcken in Bitcoin-Difficulty von einem Minderheits-Miner einen Mint gegen einen nicht kanonischen Bitcoin-Zweig gültig machen (Angriff H).</p>
+      <p>Wie Postfork-Blöcke erzeugt werden, ist eine offene Entscheidung (Gate G5). Keine Option ist gewählt. Das ist wichtig, weil der Peg nicht stärker sein kann als das, was sein Verifizierer über Postfork feststellen kann, und ob ein Burn kanonisch ist, hängt von der Regel der Blockproduktion ab. Auch Mints hängen davon ab: Produzenten, die ehrliche Bitcoin-Header zensieren, können zusammen mit einem privaten Bitcoin-Zweig von 2016 Blöcken mit mindestens der in Genesis festgelegten Mindestarbeit (2016 Blöcke in der Difficulty des Checkpoints; wegen der Timewarp-Schwäche von Bitcoin kann das weniger als 2016 Blöcke aktueller Arbeit sein) von einem Minderheits-Miner einen Mint gegen einen nicht kanonischen Bitcoin-Zweig gültig machen (Angriff H).</p>
     </div>
     <div class="table-wrap">
       <table>
