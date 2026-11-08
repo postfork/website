@@ -122,7 +122,7 @@
       </article>
       <article class="card">
         <h3><span class="ico" aria-hidden="true">02</span>Only bitcoin</h3>
-        <p>No subsidy at any height, no premine, no genesis allocation, no developer fund. pBTC is created only when Postfork consensus verifies a Bitcoin vault deposit at deep finality, Redemption needs a burn record (<code>PFB1</code>); like bitcoin, pBTC can also leave circulation through other provably unspendable outputs or fees a block does not claim.</p>
+        <p>No subsidy at any height, no premine, no genesis allocation, no developer fund. pBTC is created only when Postfork consensus verifies a Bitcoin vault deposit at deep finality. Redemption requires a burn record (<code>PFB1</code>); like bitcoin, pBTC can also leave circulation through other provably unspendable outputs or fees a block does not claim.</p>
       </article>
       <article class="card">
         <h3><span class="ico branch" aria-hidden="true">03</span>A peg you can operate</h3>
@@ -162,7 +162,7 @@
       </article>
       <article class="card">
         <h3>Real bitcoin, no second asset</h3>
-        <p>Every pBTC is backed at mint by BTC in a vault on Bitcoin. Fees are paid in pBTC. There is nothing else on the chain.</p>
+        <p>Every pBTC is minted only against a vault deposit on the Bitcoin chain that Postfork’s header view shows as best. That is real backing only under the stated assumptions: block producers that censor honest Bitcoin headers (Attack H) or a Bitcoin reorganization deeper than 2016 blocks can leave consensus-valid pBTC unbacked. Fees are paid in pBTC. There is nothing else on the chain.</p>
       </article>
       <article class="card">
         <h3>A peg that needs no soft fork</h3>
@@ -296,7 +296,7 @@
           <table>
             <thead><tr><th scope="col">Action</th><th scope="col">Why it fails</th></tr></thead>
             <tbody>
-              <tr><th scope="row">Mint pBTC without a vault deposit</th><td>A mint needs a proven <code>MoveToBacked</code> at depth ≥ 2016 on BtcView; full nodes reject anything else. Against the BitVM2 verifier this also needs the Postfork validity proof (gate G4, Attack V).</td></tr>
+              <tr><th scope="row">Mint pBTC without a vault deposit</th><td>A mint needs a proven <code>MoveToBacked</code> at depth ≥ 2016 on BtcView; full nodes reject anything else. BtcView is canonical Bitcoin only under the stated assumptions: header censorship by block producers plus a private 2016-block Bitcoin branch (Attack H), or a deeper Bitcoin reorganization, can make a consensus-valid mint unbacked. Against the BitVM2 verifier this also needs the Postfork validity proof (gate G4, Attack V).</td></tr>
               <tr><th scope="row">Mint twice from one deposit</th><td>Each vault outpoint can be consumed once (clause M8).</td></tr>
               <tr><th scope="row">Redirect a mint</th><td>The claim script is committed in the pre-signed, depositor-co-signed <code>MoveToBacked</code>.</td></tr>
               <tr><th scope="row">Freeze, blacklist or claw back pBTC</th><td>No such rule exists.</td></tr>
@@ -378,7 +378,7 @@
       <article class="card"><h3>Core fidelity</h3><p>Every difference to the pinned Bitcoin Core release is in the delta register. An implementation that differs anywhere else does not conform.</p><p class="meta">REQ-1</p></article>
       <article class="card"><h3>Effectively trustless, with stated assumptions</h3><p>You are an operator, you run your own nodes, you trust no other operator with your bitcoin, under the listed assumptions, including that block producers include honest Bitcoin headers, for a permitted block-production class, and only after all gates clear.</p><p class="meta">§1.1.1</p></article>
       <article class="card"><h3>Mainnet-proven dependencies</h3><p>The reserve uses only constructions proven on Bitcoin mainnet. Anything that is not mainnet-proven is a named, blocking launch gate.</p><p class="meta">REQ-7</p></article>
-      <article class="card"><h3>Exit without permission</h3><p>Every holder can burn and obtain BTC without any gatekeeper. Anyone, including the holder, may request admission as an operator; the current members certify admission and can censor it. Serving your own exit requires verified admission; otherwise exit depends on at least one admitted, live operator.</p><p class="meta">REQ-4</p></article>
+      <article class="card"><h3>Exit without permission</h3><p>Every holder can publish a burn without any gatekeeper; no gatekeeper step exists in the peg-out. A BTC payout is not guaranteed: it needs the burn included and final on Postfork, a matching unspent vault, a maximum fee that clears an operator’s costs, and at least one admitted, live, liquid and willing operator of that vault’s epoch. Anyone, including the holder, may request admission as an operator; the current members certify admission and can censor it. Serving your own exit requires verified admission; otherwise exit depends on at least one admitted, live operator.</p><p class="meta">REQ-4</p></article>
     </div>
 
     <details class="more">

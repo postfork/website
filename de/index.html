@@ -122,7 +122,7 @@
       </article>
       <article class="card">
         <h3><span class="ico" aria-hidden="true">02</span>Nur Bitcoin</h3>
-        <p>Keine Subvention in irgendeiner Höhe, kein Premine, keine Genesis-Zuteilung, kein Entwicklerfonds. pBTC entsteht nur, wenn der Postfork-Konsens eine Tresoreinlage auf Bitcoin in tiefer Finalität prüft, Die Einlösung braucht einen Burn-Record (<code>PFB1</code>); wie Bitcoin kann pBTC auch über andere beweisbar unausgebbare Outputs oder von einem Block nicht beanspruchte Gebühren aus dem Umlauf verschwinden.</p>
+        <p>Keine Subvention in irgendeiner Höhe, kein Premine, keine Genesis-Zuteilung, kein Entwicklerfonds. pBTC entsteht nur, wenn der Postfork-Konsens eine Tresoreinlage auf Bitcoin in tiefer Finalität prüft. Für die Einlösung ist ein Burn-Record (<code>PFB1</code>) nötig; wie Bitcoin kann pBTC auch über andere beweisbar unausgebbare Outputs oder von einem Block nicht beanspruchte Gebühren aus dem Umlauf verschwinden.</p>
       </article>
       <article class="card">
         <h3><span class="ico branch" aria-hidden="true">03</span>Ein Peg, den du betreiben kannst</h3>
@@ -162,7 +162,7 @@
       </article>
       <article class="card">
         <h3>Echtes Bitcoin, kein zweites Asset</h3>
-        <p>Jedes pBTC ist beim Mint durch BTC in einem Tresor auf Bitcoin gedeckt. Gebühren werden in pBTC bezahlt. Sonst gibt es nichts auf der Kette.</p>
+        <p>Jedes pBTC wird nur gegen eine Tresoreinlage auf der Bitcoin-Kette geprägt, die Postforks Header-Sicht als beste zeigt. Echte Deckung ist das nur unter den genannten Annahmen: Blockproduzenten, die ehrliche Bitcoin-Header zensieren (Angriff H), oder eine Bitcoin-Reorganisation tiefer als 2016 Blöcke können konsensgültiges pBTC ungedeckt lassen. Gebühren werden in pBTC bezahlt. Sonst gibt es nichts auf der Kette.</p>
       </article>
       <article class="card">
         <h3>Ein Peg ohne Soft Fork</h3>
@@ -298,7 +298,7 @@
           <table>
             <thead><tr><th scope="col">Handlung</th><th scope="col">Warum sie scheitert</th></tr></thead>
             <tbody>
-              <tr><th scope="row">pBTC ohne Tresoreinlage prägen</th><td>Ein Mint braucht ein bewiesenes <code>MoveToBacked</code> in Tiefe ≥ 2016 in BtcView; Full Nodes lehnen alles andere ab. Gegenüber dem BitVM2-Verifizierer braucht es zusätzlich den Postfork-Gültigkeitsbeweis (Gate G4, Angriff V).</td></tr>
+              <tr><th scope="row">pBTC ohne Tresoreinlage prägen</th><td>Ein Mint braucht ein bewiesenes <code>MoveToBacked</code> in Tiefe ≥ 2016 in BtcView; Full Nodes lehnen alles andere ab. BtcView ist nur unter den genannten Annahmen kanonisches Bitcoin: Header-Zensur durch Blockproduzenten plus ein privater Bitcoin-Zweig von 2016 Blöcken (Angriff H) oder eine tiefere Bitcoin-Reorganisation können einen konsensgültigen Mint ungedeckt machen. Gegenüber dem BitVM2-Verifizierer braucht es zusätzlich den Postfork-Gültigkeitsbeweis (Gate G4, Angriff V).</td></tr>
               <tr><th scope="row">Aus einer Einlage zweimal prägen</th><td>Jeder Tresor-Outpoint kann nur einmal verbraucht werden (Klausel M8).</td></tr>
               <tr><th scope="row">Einen Mint umleiten</th><td>Das Claim-Script ist im vorsignierten, vom Einzahler mitsignierten <code>MoveToBacked</code> festgelegt.</td></tr>
               <tr><th scope="row">pBTC einfrieren, sperren oder zurückholen</th><td>Eine solche Regel gibt es nicht.</td></tr>
@@ -380,7 +380,7 @@
       <article class="card"><h3>Treue zu Bitcoin Core</h3><p>Jeder Unterschied zum gepinnten Bitcoin-Core-Release steht im Delta-Register. Eine Implementierung, die irgendwo sonst abweicht, ist nicht konform.</p><p class="meta">REQ-1</p></article>
       <article class="card"><h3>Effektiv vertrauensfrei, mit genannten Annahmen</h3><p>Du bist Operator, du betreibst deine eigenen Nodes, du vertraust keinem anderen Operator deine Bitcoin an, unter den genannten Annahmen, einschliesslich dessen, dass Blockproduzenten ehrliche Bitcoin-Header aufnehmen, für eine zulässige Blockproduktionsklasse und erst, wenn alle Gates erfüllt sind.</p><p class="meta">§1.1.1</p></article>
       <article class="card"><h3>Mainnet-erprobte Abhängigkeiten</h3><p>Die Reserve nutzt nur Konstruktionen, die auf dem Bitcoin-Mainnet erprobt sind. Alles nicht Mainnet-Erprobte ist ein benanntes, blockierendes Launch-Gate.</p><p class="meta">REQ-7</p></article>
-      <article class="card"><h3>Ausstieg ohne Erlaubnis</h3><p>Jeder Inhaber kann verbrennen und BTC erhalten, ohne Gatekeeper. Jeder, auch der Inhaber selbst, darf die Aufnahme als Operator beantragen; die aktuellen Mitglieder zertifizieren die Aufnahme und können sie zensieren. Den eigenen Ausstieg selbst bedienen kann nur, wer geprüft aufgenommen ist; sonst hängt der Ausstieg von mindestens einem aufgenommenen, aktiven Operator ab.</p><p class="meta">REQ-4</p></article>
+      <article class="card"><h3>Ausstieg ohne Erlaubnis</h3><p>Jeder Inhaber kann ohne Gatekeeper einen Burn veröffentlichen; im Peg-out gibt es keinen Gatekeeper-Schritt. Eine BTC-Auszahlung ist nicht garantiert: Sie braucht einen auf Postfork aufgenommenen und finalen Burn, einen passenden unausgegebenen Tresor, eine Höchstgebühr, die die Kosten eines Operators deckt, und mindestens einen aufgenommenen, aktiven, liquiden und bereiten Operator aus der Epoche dieses Tresors. Jeder, auch der Inhaber selbst, darf die Aufnahme als Operator beantragen; die aktuellen Mitglieder zertifizieren die Aufnahme und können sie zensieren. Den eigenen Ausstieg selbst bedienen kann nur, wer geprüft aufgenommen ist; sonst hängt der Ausstieg von mindestens einem aufgenommenen, aktiven Operator ab.</p><p class="meta">REQ-4</p></article>
     </div>
 
     <details class="more">
