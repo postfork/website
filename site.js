@@ -20,5 +20,8 @@ document.addEventListener("click", function (event) {
       link.setAttribute("aria-label", link.getAttribute("data-idle-label") || "");
       link._copyTimer = null;
     }, 1600);
+  }).catch(function () {
+    // Clipboard denied or unavailable: no copied state; the anchor navigation
+    // that the click already triggered remains the fallback.
   });
 });

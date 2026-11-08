@@ -153,7 +153,7 @@
     </div>
     <div class="prose">
       <p>One concrete proposal, published in 2025 under the name <a href="https://ctv-csfs.com/">“CTV + CSFS”</a>, consists of exactly two BIPs: <a href="https://github.com/bitcoin/bips/blob/master/bip-0119.mediawiki">BIP-119</a> and <a href="https://github.com/bitcoin/bips/blob/master/bip-0348.md">BIP-348</a>. Both are <code>Draft</code>. Reference implementations exist for regression testing (Bitcoin Core pull requests <a href="https://github.com/bitcoin/bitcoin/pull/31989">#31989</a> and <a href="https://github.com/bitcoin/bitcoin/pull/32247">#32247</a>, regtest only, open) and on the <a href="https://github.com/bitcoin-inquisition/bitcoin/releases">Bitcoin Inquisition</a> signet. None is active on Bitcoin. Anyone who wants to build with these opcodes today builds with coins that are worth nothing.</p>
-      <p>Postfork proposes a place where the script layer is exactly the proposed one, where the only money is bitcoin, and where nobody has to be trusted with that bitcoin except, at most, oneself.</p>
+      <p>Postfork proposes a place where the script layer is exactly the proposed one, where the only money is bitcoin, and where no operator other than yourself has to be trusted with that bitcoin, under the assumptions this site states: 1-of-N setup honesty, at least one honest challenger acting in time, sound cryptography and a sound validity proof, an honest Bitcoin hashrate majority, block producers that include honest Bitcoin headers, and the canonicity assumption of the block-production class in force (under BP-O1V an honest merge-mining majority). Those conditions on block production remain even if you are your own operator.</p>
     </div>
     <div class="grid grid-3">
       <article class="card">
@@ -252,7 +252,7 @@
         <h3>Peg-out (burn first)</h3>
         <ol class="steps branch">
           <li><strong>Burn</strong>Publish a burn of an available vault denomination, naming your Bitcoin key and a maximum fee. There is no un-burn.</li>
-          <li><strong>Front</strong>After the burn is final on Postfork, any registered operator, including you if you joined, pays you on Bitcoin from its own funds.</li>
+          <li><strong>Front</strong>After the burn is final on Postfork, any admitted operator, including you if your admission was verified, pays you on Bitcoin from its own funds.</li>
           <li><strong>Claim</strong>The operator claims reimbursement along the pre-signed graph.</li>
           <li><strong>Challenge</strong>During the window, anyone running a Bitcoin and a Postfork full node may disprove a false claim. A successful disprove slashes the operator’s bond and pays the challenger a bounty on Bitcoin.</li>
           <li><strong>Reimbursement</strong>Without a successful disprove, the operator receives exactly the burned amount from one vault.</li>
@@ -378,7 +378,7 @@
       <article class="card"><h3>Core fidelity</h3><p>Every difference to the pinned Bitcoin Core release is in the delta register. An implementation that differs anywhere else does not conform.</p><p class="meta">REQ-1</p></article>
       <article class="card"><h3>Effectively trustless, with stated assumptions</h3><p>You are an operator, you run your own nodes, you trust no other operator with your bitcoin, under the listed assumptions, including that block producers include honest Bitcoin headers, for a permitted block-production class, and only after all gates clear.</p><p class="meta">§1.1.1</p></article>
       <article class="card"><h3>Mainnet-proven dependencies</h3><p>The reserve uses only constructions proven on Bitcoin mainnet. Anything that is not mainnet-proven is a named, blocking launch gate.</p><p class="meta">REQ-7</p></article>
-      <article class="card"><h3>Exit without permission</h3><p>Every holder can burn and obtain BTC without any gatekeeper. Anyone may become an operator, including the holder.</p><p class="meta">REQ-4</p></article>
+      <article class="card"><h3>Exit without permission</h3><p>Every holder can burn and obtain BTC without any gatekeeper. Anyone, including the holder, may request admission as an operator; the current members certify admission and can censor it. Serving your own exit requires verified admission; otherwise exit depends on at least one admitted, live operator.</p><p class="meta">REQ-4</p></article>
     </div>
 
     <details class="more">
