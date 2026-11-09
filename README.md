@@ -25,7 +25,7 @@ Prominent claim (specification §11.3, verbatim):
 | `/white-paper/` | English whitepaper PDF via a 200 proxy in `_redirects` (the address bar keeps `/white-paper/`); `white-paper/index.html` is a minimal PDF fallback for hosts that ignore `_redirects` |
 | `/de/white-paper/` | German whitepaper PDF, same pattern |
 | `/faq/`, `/de/faq/` | FAQ in English and German |
-| `404.html` | Not-found page (Cloudflare Pages serves it automatically) |
+| `404.html` | Not-found page (served with status 404 via `not_found_handling` in `wrangler.jsonc`) |
 | `files/` | Whitepaper PDFs, copies of the current papers |
 | `styles.css` | The only stylesheet; design tokens as CSS custom properties at the top, with contrast ratios |
 | `site.js` | The only script: copy-to-clipboard for FAQ anchors (progressive enhancement) |
@@ -35,6 +35,8 @@ Prominent claim (specification §11.3, verbatim):
 | `_headers` | Security headers (CSP without `unsafe-inline`; detached for the PDF paths) |
 | `robots.txt`, `sitemap.xml` | Crawl rules and sitemap with `hreflang` alternates incl. `x-default` |
 | `.nojekyll` | Disables Jekyll processing on hosts that would apply it |
+| `wrangler.jsonc` | Cloudflare Workers static-assets configuration (assets-only, no Worker script) |
+| `.assetsignore` | Files kept out of the Cloudflare upload (repository docs, `brand/` sources, tooling) |
 
 Conventions: plain HTML and CSS, no build step, no package manager, no framework, no external fonts, CDNs, iframes, analytics or trackers. No inline `style` attributes and no inline scripts (JSON-LD data blocks only), so the CSP stays strict. Dark-first design with a light theme via `prefers-color-scheme`; no animation; smooth scrolling only under `prefers-reduced-motion: no-preference`. Every indexable content page has a canonical link, `hreflang` alternates and Open Graph/Twitter tags (the 404 page does not). English and German pages are kept in parity; a change to one language is a change to both.
 
@@ -48,15 +50,15 @@ Any static file server from the repository root works, for example:
 python3 -m http.server 8000
 ```
 
-Then open <http://localhost:8000/>. A plain local server does not apply `_redirects` or `_headers`, so `/white-paper/` shows the HTML fallback that embeds the PDF; on Cloudflare Pages the same URL serves the PDF directly.
+Then open <http://localhost:8000/>. A plain local server does not apply `_redirects` or `_headers`, so `/white-paper/` shows the HTML fallback that embeds the PDF; on Cloudflare the same URL serves the PDF directly.
 
-## Deploy (Cloudflare Pages)
+## Deploy (Cloudflare Workers static assets)
 
-The repository root is the site; there is no build command and the output directory is `/`.
+The repository root is the site; there is no build step and no Worker script. Production is a Cloudflare Worker named `website` with static assets, connected to this repository through Cloudflare's Git integration: every push to `main` deploys (`wrangler deploy` with `wrangler.jsonc`), and branches and pull requests get preview URLs.
 
-1. Create a Cloudflare Pages project from this repository (Git integration or Direct Upload, for example `wrangler pages deploy . --project-name=<project>`). Build command: none. Output directory: `/`.
-2. Once `postfork.org` is registered, attach it as the custom domain of the project.
-3. Host-level redirects cannot live in `_redirects` (Cloudflare Pages supports only relative paths there; see <https://developers.cloudflare.com/pages/configuration/redirects/>). Redirect `www.postfork.org` and `postfork.io` (planned) to `https://postfork.org` with a 301 that preserves path and query, using a Cloudflare redirect rule on the zone or a Pages Function.
+1. `wrangler.jsonc` sets the assets directory to the repository root, serves `404.html` for unknown paths and keeps the default trailing-slash HTML handling. Its empty `previews` block is required: Workers Builds runs `wrangler preview` for non-production branches, and that command fails without it. `_redirects` (200 proxies for the paper URLs, 301 aliases) and `_headers` apply as on Cloudflare Pages.
+2. `.assetsignore` keeps repository files (`README.md`, `CONTRIBUTING.md`, `SECURITY.md`, `LICENSE`, `wrangler.jsonc`, `brand/` sources) off the public CDN. Add any new non-site file there.
+3. Attach `postfork.org` as a custom domain of the Worker in the Cloudflare dashboard. Host-level redirects cannot live in `_redirects` (relative paths only; see <https://developers.cloudflare.com/pages/configuration/redirects/>). Redirect `www.postfork.org` and `postfork.io` (planned) to `https://postfork.org` with a 301 that preserves path and query, using a Cloudflare redirect rule on the zone.
 4. Credentials (API tokens, account IDs) never go into this repository.
 
 This repository has no CI workflow. Before merging, check every page with a local static server, confirm the `_redirects` 200 lines for the paper URLs, and confirm that `files/*.pdf` match the current papers. When the whitepaper changes, replace `files/*.pdf` in the same pull request.

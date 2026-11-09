@@ -1,0 +1,15 @@
+# Files excluded from the Cloudflare upload. The deployed site is the static
+# product only; repository and tooling files stay off the public CDN.
+.git
+.github
+.gitignore
+.assetsignore
+.nojekyll
+.DS_Store
+wrangler.jsonc
+README.md
+CONTRIBUTING.md
+SECURITY.md
+LICENSE
+brand/
+.wrangler/
