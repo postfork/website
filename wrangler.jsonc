@@ -10,5 +10,8 @@
     "html_handling": "auto-trailing-slash"
   },
   "workers_dev": true,
-  "preview_urls": true
+  "preview_urls": true,
+  // Required by `wrangler preview`, which Workers Builds runs for
+  // non-production branches. Assets and compatibility settings stay top level.
+  "previews": {}
 }

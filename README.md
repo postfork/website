@@ -56,7 +56,7 @@ Then open <http://localhost:8000/>. A plain local server does not apply `_redire
 
 The repository root is the site; there is no build step and no Worker script. Production is a Cloudflare Worker named `website` with static assets, connected to this repository through Cloudflare's Git integration: every push to `main` deploys (`wrangler deploy` with `wrangler.jsonc`), and branches and pull requests get preview URLs.
 
-1. `wrangler.jsonc` sets the assets directory to the repository root, serves `404.html` for unknown paths and keeps the default trailing-slash HTML handling. `_redirects` (200 proxies for the paper URLs, 301 aliases) and `_headers` apply as on Cloudflare Pages.
+1. `wrangler.jsonc` sets the assets directory to the repository root, serves `404.html` for unknown paths and keeps the default trailing-slash HTML handling. Its empty `previews` block is required: Workers Builds runs `wrangler preview` for non-production branches, and that command fails without it. `_redirects` (200 proxies for the paper URLs, 301 aliases) and `_headers` apply as on Cloudflare Pages.
 2. `.assetsignore` keeps repository files (`README.md`, `CONTRIBUTING.md`, `SECURITY.md`, `LICENSE`, `wrangler.jsonc`, `brand/` sources) off the public CDN. Add any new non-site file there.
 3. Attach `postfork.org` as a custom domain of the Worker in the Cloudflare dashboard. Host-level redirects cannot live in `_redirects` (relative paths only; see <https://developers.cloudflare.com/pages/configuration/redirects/>). Redirect `www.postfork.org` and `postfork.io` (planned) to `https://postfork.org` with a 301 that preserves path and query, using a Cloudflare redirect rule on the zone.
 4. Credentials (API tokens, account IDs) never go into this repository.
