@@ -29,8 +29,8 @@ Prominent claim (specification §11.3, verbatim):
 | `files/` | Whitepaper PDFs, copies of the current papers |
 | `styles.css` | The only stylesheet; design tokens as CSS custom properties at the top, with contrast ratios |
 | `site.js` | The only script: copy-to-clipboard for FAQ anchors (progressive enhancement) |
-| `favicon.svg`, `og.png` | Icon and 1200×630 share image |
-| `brand/` | Sources: `postfork-icon.svg` (mark), `og.svg` (source of `og.png`) |
+| `favicon.svg`, `og.jpg` | Icon and 1200×630 share image (JPEG, keep it under 300 KB: some messengers, WhatsApp in particular, drop larger preview images) |
+| `brand/` | Sources: `postfork-icon.svg` (mark), `og.svg` (source of `og.jpg`) |
 | `_redirects` | 200 proxies for paper URLs and 301 aliases (`/whitepaper`, `/FAQ`, `/de/whitepaper`, …) |
 | `_headers` | Security headers (CSP without `unsafe-inline`; detached for the PDF paths) |
 | `robots.txt`, `sitemap.xml` | Crawl rules and sitemap with `hreflang` alternates incl. `x-default` |
