@@ -13,3 +13,4 @@ SECURITY.md
 LICENSE
 brand/
 .wrangler/
+workers/
